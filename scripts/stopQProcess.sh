@@ -1,6 +1,6 @@
 #!/bin/bash
 ###########################################################
-# Script to stop dashboard
+# Script to start q process
 ###########################################################
 
 ###########################################################
@@ -41,7 +41,7 @@ sourceGeneralScript()
 sourceConfig()
 {
 	printLines
-	info "Sourcing for env.config before starting Kx Dashboards"
+	info "Sourcing for env.config and port.config before starting q process"
 	printLines
 	info "Running find command"
 	if [[ $(find ~ -name env.config) ]]
@@ -52,37 +52,44 @@ sourceConfig()
 		err "Failed to find env.config"
 		return 1
 	fi
+	if [[ $(find ~ -name port.config) ]]
+	then
+		info "Found port.config, sourcing it"
+		source $(find ~ -name port.config)
+	else
+		err "Failed to find port.config"
+		return 1
+	fi
 	return 0
 }
 
 ###########################################################
-# Function: stopDash
-# Description: stops kx Dashboard q process
+# Function: startDash
+# Description: starts kx Dashboard q process
 ###########################################################
 
-stopDash()
+stopQProcess()
 {
 	printLines
-	info "Stopping Kx Dashboards"
+	info "Stopping Q Process $1"
 	printLines
 	info "Check for existing PID"
-	if [[ -f $KXDASHPID ]]
+	if [[ -f $QPROCESSESPID ]]
 	then
-		PID=`cat $KXDASHPID`
-		if [[ $(ps -ef | grep q | grep $PID | grep -v grep) ]]
+		PID=`grep $1 $QPROCESSESPID | awk -F "=" '{print $2}'`
+		if [[ $PID != "" ]] 
 		then
-			info "Existing Kx Dashboard started under PID: $PID"
-			info "Stopping Kx Dashboard"
-			kill -9 $PID
-			rm $KXDASHPID
-			return 0
-		else
-			warn "Kx Dashboard was already stopped, removing PID file"
-			rm $KXDASHPID
-			return 0
+			if [[ $(ps -ef | grep q | grep $PID | grep -v grep) ]]
+			then
+				info "Existing Q Process $1 started under PID: $PID"
+				info "Stopping Q Process"
+				kill -9 $PID
+				sed -i "/^${1}/d" $QPROCESSESPID
+				return 0
+			fi
 		fi
-	else 
-		warn "Kx Dashboard was never started"
+	else
+		warn "No PID File, nothing to stop"
 	fi
 	return 0
 }
@@ -91,4 +98,4 @@ sourceGeneralScript
 failCheck
 sourceConfig
 failCheck
-stopDash
+stopQProcess $1

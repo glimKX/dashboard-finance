@@ -1,6 +1,6 @@
 #!/bin/bash
 ###########################################################
-# Script to stop dashboard
+# Script to start q process
 ###########################################################
 
 ###########################################################
@@ -41,7 +41,7 @@ sourceGeneralScript()
 sourceConfig()
 {
 	printLines
-	info "Sourcing for env.config before starting Kx Dashboards"
+	info "Sourcing for env.config and port.config before starting q process"
 	printLines
 	info "Running find command"
 	if [[ $(find ~ -name env.config) ]]
@@ -52,38 +52,70 @@ sourceConfig()
 		err "Failed to find env.config"
 		return 1
 	fi
+	if [[ $(find ~ -name port.config) ]]
+	then
+		info "Found port.config, sourcing it"
+		source $(find ~ -name port.config)
+	else
+		err "Failed to find port.config"
+		return 1
+	fi
+	if [[ -f $SECRET_KEYS ]]
+	then
+		info "Secret key is present, loading it"
+		source $SECRET_KEYS
+	fi
 	return 0
 }
 
 ###########################################################
-# Function: stopDash
-# Description: stops kx Dashboard q process
+# Function: startDash
+# Description: starts kx Dashboard q process
 ###########################################################
 
-stopDash()
+startQProcess()
 {
 	printLines
-	info "Stopping Kx Dashboards"
+	info "Starting Q Process $1"
 	printLines
 	info "Check for existing PID"
-	if [[ -f $KXDASHPID ]]
+	if [[ -f $QPROCESSESPID ]]
 	then
-		PID=`cat $KXDASHPID`
-		if [[ $(ps -ef | grep q | grep $PID | grep -v grep) ]]
+		PID=`grep $1 $QPROCESSESPID | awk -F "=" '{print $2}'`
+		if [[ $PID != "" ]] 
 		then
-			info "Existing Kx Dashboard started under PID: $PID"
-			info "Stopping Kx Dashboard"
-			kill -9 $PID
-			rm $KXDASHPID
-			return 0
-		else
-			warn "Kx Dashboard was already stopped, removing PID file"
-			rm $KXDASHPID
-			return 0
+			if [[ $(ps -ef | grep q | grep $PID | grep -v grep) ]]
+			then
+				warn "Existing Q Process $1 started under PID: $PID"
+				warn "Not starting Q Process"
+				return 0
+			fi
 		fi
-	else 
-		warn "Kx Dashboard was never started"
+	else
+		info "No PID File"
 	fi
+	sed -i "/^${1}/d" $QPROCESSESPID
+	info "No Existing Q Process $1"
+	info "Checking against valid process and port"
+	VALIDPORT=\${$(echo ${1}_PORT | tr [a-z] [A-Z])}
+	VALIDPORT=$(eval echo $VALIDPORT)
+	if [[ $VALIDPORT == "" ]] 
+	then 
+		err "Process is not valid as it does not have an accompanied port"
+		return 1
+	fi
+	info "Starting Q Process $1"
+	cd $QSCRIPTS_DIR > /dev/null
+	#echo $PWD
+	if [ ! -f ${QSCRIPTS_DIR}/${1}.q ] 
+	then
+		err "Process is not valid as qscript is missing"
+		return 1
+	fi
+	$Q ${QSCRIPTS_DIR}/${1}.q -p $VALIDPORT 2>&1 /dev/null &
+	echo ${1}=$! >> $QPROCESSESPID
+	info "Started Q Process $1 under PID: `grep $1 $QPROCESSESPID`"
+	cd - > /dev/null
 	return 0
 }
 
@@ -91,4 +123,4 @@ sourceGeneralScript
 failCheck
 sourceConfig
 failCheck
-stopDash
+startQProcess $1
