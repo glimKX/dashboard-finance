@@ -19,7 +19,7 @@ apiKey:enlist getenv `ALPHAVANTAGEAPI;
 
 //Alphavantage financial data schema
 dailyFinData:flip `open`high`low`close`volume!"FFFFF"$\:();
-metaData:`information`sym`lastUpdated!"*ST"$\:();
+metaData:flip `information`sym`lastUpdated!"*ST"$\:();
 
 //Start of API
 //Query builder then runs it - Takes 2 compulsory inputs
@@ -53,6 +53,7 @@ convertToTable:{[res]
 	mdataCols:mdataCols where any mdataCols like/: ("*Information*";"*Symbol*";"*Last*");
 	mdata:cols[metaData] xcol mdataCols#.Q.id enlist mdata;	
 	mdata:update `$sym, "P"$lastUpdated from mdata;
+	data:update sym:count[i]#mdata[`sym] from data;
 	:(mdata;data)
  };
 
