@@ -24,17 +24,21 @@
 //Generate a an ID which the sym belongs to
 //Send sym table to that ID and save splayed table down, note that if there are existing data, to merge it 
 
-//symIDDir schema
-symIDDirectorySchema:`sym xkey flip `id`information`sym`lastUpdated!"J*ST"$\:();
-
 .log.out "Loading DAILY HDB DIR";
-system "l ,"getenv `HDB_DAILY_DIR;
+system "l ",getenv `HDB_DAILY_DIR;
 .log.out "Loaded DAILY HDB DIR";
+.log.out .Q.s tables[];
+
+\d .scrapper
+
+//symIDDir schema
+symIDDirectorySchema:`sym xkey flip `id`information`sym`lastUpdated!"J*SZ"$\:();
+dailyFinData:update date:`date$(),sym:`$() from .alphavantage.dailyFinData;
 
 $[not () ~ key hsym `$getenv `SYM_ID_DIRECTORY;
 	[
 		.log.out "Loading symID Directory";
-		symIDDirectory:get hsym `$getenv `SYM_ID_DIRECTORY;
+		symIDDirectory:get symIDDirLoc:hsym `$getenv `SYM_ID_DIRECTORY;
 		.log.out "Loaded symID Directory"
 	];
 	[
@@ -42,6 +46,16 @@ $[not () ~ key hsym `$getenv `SYM_ID_DIRECTORY;
 		symIDDirectory:symIDDirectorySchema
 	]
  ];
+
+if[$[`;()] ~ key hsym `$getenv `HDB_DAILY_DIR;
+	.log.out "New HDB, initialising first partition";
+	sv[`;(hsym `0;`dailyFinancialData;`)] set .Q.en[`:.;dailyFinData];
+	system "d .";
+	system "l ",getenv `HDB_DAILY_DIR;
+	system "d .scrapper";
+	.log.out "Re-loaded New HDB";
+ ];
+	
 
 .log.out "Loading scrapper config";
 scrapperConfig:`$read0 hsym `$getenv[`CONFIG_DIR],"/scrapper.config";
@@ -52,13 +66,13 @@ scrapperConfig:`$read0 hsym `$getenv[`CONFIG_DIR],"/scrapper.config";
 //Get n random sym
 getSym:{[x]
 	.log.out "Choosing ",.Q.s[x], " random sym";
-	symsToScrape:x?scrapperConfig;
+	symsToScrape:distinct x?scrapperConfig;
 	//Remove syms which are updated recently
 	//Should a table where we can perform each
-	baseDict:select from symIDDirectory where (sym in symsToScrape, not .z.D=`date$lastUpdated);
-	symsToScrape:symsToScrape except key symIDDirectory;
+	baseDict:select from symIDDirectory where sym in symsToScrape, not .z.D=`date$lastUpdated;
+	symsToScrape:symsToScrape except raze key baseDict;
 	//hardcoded number for ID
-	symsToScrape uj `id`sym!(count[symsToScrape]?9;symsToScrape)
+	baseDict upsert flip `id`sym!(count[symsToScrape]?9;symsToScrape)
  };
 
 runScrape:{[dict]
@@ -68,19 +82,30 @@ runScrape:{[dict]
 	:.alphavantage.convertToTable[res]
  };
 
-writeScrape:{[idDict;dataDict]
-	//save dataDict to id hdb
-	//TO-DO need to be able to merge data from existing id hdb
-	sv[`;(hsym `$string idDict[`id];`dailyFinData;`)] set Q.en[`:.;dataDict[1]];
-	//update symIDDirectory table
-	`symIDDirectory upsert idDict;
- };
-
 //Main Scrapper function
 scrapeMain:{[]
 	.log.out "Begin Main Srapper function";
 	symDictsToScrape:getSym[3];
-	scrapedData:runScrape each symDictsToScrape;
-	writeScrape '[symDictsToScrape;scrapedData];
+	scrapedData:runScrape each 0!symDictsToScrape;
+	writeScrape '[0!symDictsToScrape;scrapedData];
+	symIDDirLoc set .scrapper.symIDDirectory;
 	.log.out "End of Scrapper function";
  };
+
+\d .
+
+//Declaring write function in global space due to global workspace restrictions
+.scrapper.writeScrape:{[idDict;dataDict]
+        //save dataDict to id hdb
+        //TO-DO need to be able to merge data from existing id hdb
+        .debug.var:`idDict`dataDict!(idDict;dataDict);
+        existingData:select from dailyFinancialData where int = idDict[`id];
+        existingData:delete from existingData where sym=distinct dataDict[1]`sym, date in dataDict[1]`date;
+        toWriteDown:existingData uj dataDict[1];
+        sv[`;(hsym `$string idDict[`id];`dailyFinancialData;`)] set Q.en[`:.;toWriteDown];
+        //update symIDDirectory table
+        `.scrapper.symIDDirectory upsert idDict;
+
+ };
+
+.log.out "End of Init";
