@@ -27,9 +27,17 @@ buildAndRunQuery:{[args]
 	.log.out "In .alphavantage.buildQuery --- ",.Q.s1 args;
 	if[not all `function`symbol in key args;'"Missing Inputs"];
 	args:@[(enlist[(::)]!enlist[" "]),args;where 10h<>type each args;string];
-	args:args[`function`symbol],apiKey;
 	//TODO - Add options args here
-	query:":", "&" sv hookURL,'args;
+	optArgs:`function`symbol _ 1 _ args;
+	//Convoluted ifs, no validation of 1 letter options but that would type error
+	optArgs:$[1 = count optArgs;
+	    "&","=" sv raze (string key[optArgs];value[optArgs]);
+	    1 < count optArgs;
+        	"&","&" sv "=" sv' (string key[optArgs];value[optArgs]);
+        	""
+    	];
+	args:args[`function`symbol],apiKey;
+	query:":",("&" sv hookURL,'args),optArgs;
 	.log.out .Q.s1 query;
 	res:@[.Q.hg;
 		query;

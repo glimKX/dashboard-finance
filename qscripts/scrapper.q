@@ -11,10 +11,9 @@
 // This is to allow analysis that will breach free tier
 //////////////////////////
 
-\l log.q
-\l cron.q
-\l alphavantage.q
-
+system "l ",getenv[`QSCRIPTS_DIR],"/log.q";
+system "l ",getenv[`QSCRIPTS_DIR],"/cron.q";
+system "l ",getenv[`QSCRIPTS_DIR],"/alphavantage.q";
 
 //Framework for scrapping daily data
 //Run through list of sym to scrap every allowed interval
@@ -43,6 +42,7 @@ $[not () ~ key hsym `$getenv `SYM_ID_DIRECTORY;
 	];
 	[
 		.log.out "Using symID Directory Schema";
+		symIDDirLoc:hsym `$getenv `SYM_ID_DIRECTORY;
 		symIDDirectory:symIDDirectorySchema
 	]
  ];
@@ -69,16 +69,21 @@ getSym:{[x]
 	symsToScrape:distinct x?scrapperConfig;
 	//Remove syms which are updated recently
 	//Should a table where we can perform each
-	baseDict:select from symIDDirectory where sym in symsToScrape, not .z.D=`date$lastUpdated;
-	symsToScrape:symsToScrape except raze key baseDict;
+	baseDict:select from symIDDirectory where sym in symsToScrape, -[.z.D;1]>`date$lastUpdated;
+	symsToScrape:symsToScrape except key[symIDDirectory]`sym;
 	//hardcoded number for ID
-	baseDict upsert flip `id`sym!(count[symsToScrape]?9;symsToScrape)
+	baseDict upsert flip `id`sym!(count[symsToScrape]?20;symsToScrape)
  };
 
 runScrape:{[dict]
 	//enter this analytic with an each of symIDDirectory
-	.log.out "Running runScrape for --- ".Q.s1 dict;
-	res:.alphavantage.buildAndRunQuery[`function`symbol!(`TIME_SERIES_DAILY;dict`sym)];
+	.log.out "Running runScrape for --- ",.Q.s1 dict;
+	args:`function`symbol!(`TIME_SERIES_DAILY;dict`sym);
+	//add in functionality to check if sym is new, if so download full release
+	if[0N ~ first .scrapper.symIDDirectory`APPL;
+        	args[`outputsize]:`full
+	];
+	res:.alphavantage.buildAndRunQuery[args];
 	:.alphavantage.convertToTable[res]
  };
 
@@ -89,6 +94,7 @@ scrapeMain:{[]
 	scrapedData:runScrape each 0!symDictsToScrape;
 	writeScrape '[0!symDictsToScrape;scrapedData];
 	symIDDirLoc set .scrapper.symIDDirectory;
+	system "l .";
 	.log.out "End of Scrapper function";
  };
 
@@ -99,13 +105,18 @@ scrapeMain:{[]
         //save dataDict to id hdb
         //TO-DO need to be able to merge data from existing id hdb
         .debug.var:`idDict`dataDict!(idDict;dataDict);
-        existingData:select from dailyFinancialData where int = idDict[`id];
-        existingData:delete from existingData where sym=distinct dataDict[1]`sym, date in dataDict[1]`date;
+        existingData:enlist[`int] _ select from dailyFinancialData where int = idDict[`id];
+        existingData:delete from existingData where sym in distinct dataDict[1]`sym, date in dataDict[1]`date;
         toWriteDown:existingData uj dataDict[1];
-        sv[`;(hsym `$string idDict[`id];`dailyFinancialData;`)] set Q.en[`:.;toWriteDown];
+        sv[`;(hsym `$string idDict[`id];`dailyFinancialData;`)] set .Q.en[`:.;toWriteDown];
+	@[sv[`;(hsym `$string idDict[`id];`dailyFinancialData)];`sym;`p#];
         //update symIDDirectory table
+	idDict:update information:first dataDict[0][`information], lastUpdated:`datetime$first dataDict[0][`lastUpdated] from idDict;
         `.scrapper.symIDDirectory upsert idDict;
 
  };
+
+.log.out "Declaring timer functions";
+.cron.addJob[`.scrapper.scrapeMain;1%60*24;::;-0wz;0wz;1b];
 
 .log.out "End of Init";
