@@ -59,6 +59,7 @@ if[$[`;()] ~ key hsym `$getenv `HDB_DAILY_DIR;
 
 .log.out "Loading scrapper config";
 scrapperConfig:`$read0 hsym `$getenv[`CONFIG_DIR],"/scrapper.config";
+resetScrapperConfig:{scrapperConfig:`$read0 hsym `$getenv[`CONFIG_DIR],"/scrapper.config"};
 
 //Note the lack of recovery mechanism
 
