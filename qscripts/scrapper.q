@@ -81,7 +81,7 @@ runScrape:{[dict]
 	.log.out "Running runScrape for --- ",.Q.s1 dict;
 	args:`function`symbol!(`TIME_SERIES_DAILY;dict`sym);
 	//add in functionality to check if sym is new, if so download full release
-	if[0N ~ first .scrapper.symIDDirectory`APPL;
+	if[0N ~ first .scrapper.symIDDirectory dict`sym;
         	args[`outputsize]:`full
 	];
 	res:.alphavantage.buildAndRunQuery[args];
@@ -109,8 +109,8 @@ scrapeMain:{[]
         existingData:enlist[`int] _ select from dailyFinancialData where int = idDict[`id];
         existingData:delete from existingData where sym in distinct dataDict[1]`sym, date in dataDict[1]`date;
         toWriteDown:existingData uj dataDict[1];
+	toWriteDown:update `p#sym from `sym`date xasc toWriteDown;
         sv[`;(hsym `$string idDict[`id];`dailyFinancialData;`)] set .Q.en[`:.;toWriteDown];
-	@[sv[`;(hsym `$string idDict[`id];`dailyFinancialData)];`sym;`p#];
         //update symIDDirectory table
 	idDict:update information:first dataDict[0][`information], lastUpdated:`datetime$first dataDict[0][`lastUpdated] from idDict;
         `.scrapper.symIDDirectory upsert idDict;
