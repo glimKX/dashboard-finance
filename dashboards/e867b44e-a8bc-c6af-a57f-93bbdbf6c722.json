@@ -1,0 +1,77 @@
+{
+  "id": "e867b44e-a8bc-c6af-a57f-93bbdbf6c722",
+  "name": "Tech Indicators",
+  "creationDate": "Mon, 22 Jun 2020 12:36:49 GMT",
+  "lastUpdateDate": "Mon, 22 Jun 2020 12:37:11 GMT",
+  "thumb": null,
+  "screenDetails": [
+    {
+      "label": "Screen 1",
+      "value": "a3e6275c-b565-03f0-8daa-37a7fc443a8d"
+    }
+  ],
+  "screens": [
+    {
+      "id": "a3e6275c-b565-03f0-8daa-37a7fc443a8d",
+      "name": "Screen 1",
+      "thumb": null,
+      "widgets": [],
+      "relativeHeight": true,
+      "rowCount": 24,
+      "colCount": 36,
+      "floatable": false
+    }
+  ],
+  "popups": [],
+  "tags": [],
+  "dashboardTheme": "Dark",
+  "themeSwitchable": true,
+  "saveTimestamp": null,
+  "relativeHeight": true,
+  "rowCount": 24,
+  "colCount": 36,
+  "floatable": false,
+  "viewState": {
+    "selected": {
+      "_viewType": true,
+      "_default": "0",
+      "value": "0",
+      "_type": "symbol"
+    },
+    ".settings": {}
+  },
+  "data": {},
+  "worksheetPadding": 10,
+  "widgetsSpacing": 0,
+  "borderColor": "000000",
+  "borderBackground": "000000",
+  "transparentBackground": true,
+  "borderWidth": 0,
+  "borderRounding": 0,
+  "borderSpacing": 0,
+  "borderShadow": false,
+  "enableShareDashboard": false,
+  "notifications": {
+    "Notifications": {
+      "_Version": "4.2.0s2",
+      "Enabled": true,
+      "InBrowserNotifications": false,
+      "Position": "Bottom Right",
+      "MaxVisibleCount": 3,
+      "FadeOut": 5,
+      "Icon": "fa-bell-o",
+      "Sound": "beep",
+      "SoundVolume": 100,
+      "Grouping": false,
+      "GroupingInterval": 1,
+      "triggers": []
+    }
+  },
+  "showLoadingIndicators": true,
+  "unsavedViewerPrompt": false,
+  "advancedCss": "",
+  "cssClasses": "",
+  "viewStateBinding": false,
+  "wasChanged": true,
+  "version": "4.4.0p7"
+}
