@@ -54,12 +54,6 @@ sendToClient:{[proc;query]
 
 \d .
 
-.gw.pg:.z.pg;
-//.z.pg:{if[10h = type x; keepX:parse x];
-//	if[0h = type keepX;if[`.gw.sendToClient in x;:value keepX]];	
-//	.gw.pg[x];
-// };
-
 .gw.po:.z.po;
 .z.po:{.gw.openConnection[x]; .gw.pushCallBack[x]; .gw.po[x]};
 .gw.pc:.z.pc;

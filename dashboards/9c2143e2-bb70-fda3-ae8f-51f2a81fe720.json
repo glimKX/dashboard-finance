@@ -1,0 +1,816 @@
+{
+  "id": "9c2143e2-bb70-fda3-ae8f-51f2a81fe720",
+  "name": "FinDash - Tech",
+  "creationDate": "Tue, 23 Jun 2020 12:59:35 GMT",
+  "lastUpdateDate": "Tue, 23 Jun 2020 13:58:59 GMT",
+  "thumb": null,
+  "screenDetails": [
+    {
+      "label": "Screen 1",
+      "value": "6a2297cb-da66-bcb0-a8a2-8d22ef2d6ffe"
+    }
+  ],
+  "screens": [
+    {
+      "id": "6a2297cb-da66-bcb0-a8a2-8d22ef2d6ffe",
+      "name": "Screen 1",
+      "thumb": null,
+      "widgets": [
+        {
+          "id": "3ac8bcf0-a15a-111a-f333-2b6525c7e594",
+          "layout": {
+            "row": 0,
+            "column": 0,
+            "rowSpan": 24,
+            "colSpan": 36
+          },
+          "component": {
+            "id": "0c4eaf43-7a61-6b80-4ff7-dacd6087fb0c",
+            "key": "Accordion",
+            "options": {
+              "version": "4.0.0S13",
+              "Basics": {
+                "ComponentName": "accordion",
+                "Direction": "Horizontal",
+                "Sections": [
+                  {
+                    "SectionId": "section_7463",
+                    "Title": "Section",
+                    "TitleAlign": "Left",
+                    "Expanded": true,
+                    "Weight": 200,
+                    "Resizeable": false,
+                    "HideTitle": true
+                  },
+                  {
+                    "SectionId": "section_7472",
+                    "Title": "Summary",
+                    "TitleAlign": "Left",
+                    "Expanded": true,
+                    "Weight": 250,
+                    "Resizeable": false,
+                    "HideTitle": false
+                  }
+                ]
+              },
+              "Style": {
+                "advanced": "",
+                "cssClasses": "",
+                "Theme": "Dark"
+              },
+              "Alignment": {
+                "paddingLeft": 0,
+                "paddingRight": 0,
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "innerPaddingLeft": 0,
+                "innerPaddingRight": 0,
+                "innerPaddingTop": 0,
+                "innerPaddingBottom": 0,
+                "titlePaddingLeft": 0,
+                "titlePaddingRight": 0,
+                "titlePaddingTop": 7,
+                "titlePaddingBottom": 7
+              },
+              "format": {
+                "titleFontSize": 16,
+                "titleHorizontal": "Center",
+                "titleFontBold": false,
+                "titleShadow": false,
+                "titleTransparentBackground": false,
+                "tileBorderWidth": 0,
+                "tileBorderRounding": 0,
+                "tileBorderColor": "#000000",
+                "tileBackgroundColor": "#000000",
+                "tileTransparentBackground": true,
+                "tileShadow": true
+              }
+            },
+            "containerId": null,
+            "components": [],
+            "widgets": [
+              {
+                "id": "10b30385-db88-4213-1c62-e8441b9dbc33",
+                "layout": {
+                  "row": null,
+                  "column": null,
+                  "rowSpan": 12,
+                  "colSpan": 6
+                },
+                "component": {
+                  "id": "08a903c6-8839-6c4d-c7fc-bfa8ede2ee7a",
+                  "key": "FlexPanel",
+                  "options": {
+                    "version": "4.3.0",
+                    "Basics": {
+                      "layout": "horizontaltop",
+                      "maxSize": 0,
+                      "minSize": 300
+                    },
+                    "Style": {
+                      "advanced": "",
+                      "cssClasses": ""
+                    },
+                    "Alignment": {
+                      "paddingLeft": 0,
+                      "paddingRight": 0,
+                      "paddingTop": 0,
+                      "paddingBottom": 0,
+                      "innerPaddingLeft": 0,
+                      "innerPaddingRight": 0,
+                      "innerPaddingTop": 0,
+                      "innerPaddingBottom": 0,
+                      "titlePaddingLeft": 0,
+                      "titlePaddingRight": 0,
+                      "titlePaddingTop": 7,
+                      "titlePaddingBottom": 7
+                    },
+                    "format": {
+                      "titleFontSize": 16,
+                      "titleHorizontal": "Center",
+                      "titleFontBold": false,
+                      "titleShadow": false,
+                      "titleTransparentBackground": false,
+                      "tileBorderWidth": 0,
+                      "tileBorderRounding": 0,
+                      "tileBorderColor": "#000000",
+                      "tileBackgroundColor": "#000000",
+                      "tileTransparentBackground": true,
+                      "tileShadow": true
+                    }
+                  },
+                  "containerId": null,
+                  "components": [],
+                  "widgets": [
+                    {
+                      "id": "a7b3eac5-5614-b459-9f7a-c90836cdb7dd",
+                      "layout": {
+                        "row": null,
+                        "column": null,
+                        "rowSpan": 12,
+                        "colSpan": 6
+                      },
+                      "component": {
+                        "id": "848ce472-c01a-76ea-3622-ba15b0d0f377",
+                        "key": "Panel",
+                        "options": {
+                          "version": "4.4.0",
+                          "Basics": {
+                            "ComponentName": "panel",
+                            "RelativeHeight": true,
+                            "Advanced": false,
+                            "UserLayout": false,
+                            "Floatable": false,
+                            "ColCount": 36,
+                            "RowCount": 24
+                          },
+                          "Style": {
+                            "advanced": "",
+                            "cssClasses": ""
+                          },
+                          "Alignment": {
+                            "paddingLeft": 0,
+                            "paddingRight": 0,
+                            "paddingTop": 0,
+                            "paddingBottom": 0,
+                            "innerPaddingLeft": 0,
+                            "innerPaddingRight": 0,
+                            "innerPaddingTop": 0,
+                            "innerPaddingBottom": 0,
+                            "titlePaddingLeft": 0,
+                            "titlePaddingRight": 0,
+                            "titlePaddingTop": 7,
+                            "titlePaddingBottom": 7
+                          },
+                          "format": {
+                            "titleFontSize": 16,
+                            "titleHorizontal": "Center",
+                            "titleShadow": false,
+                            "tileBorderWidth": 0,
+                            "tileBorderRounding": 0,
+                            "tileBorderColor": "#000000",
+                            "tileBackgroundColor": "#000000",
+                            "tileTransparentBackground": true,
+                            "tileShadow": true
+                          }
+                        },
+                        "containerId": null,
+                        "components": [],
+                        "widgets": [
+                          {
+                            "id": "6635ebdd-e467-59c5-1885-a4b3acda6154",
+                            "layout": {
+                              "row": 0,
+                              "column": 0,
+                              "rowSpan": 7,
+                              "colSpan": 36
+                            },
+                            "component": {
+                              "id": "d2bea1b7-229f-c3d3-3980-5f685903b471",
+                              "key": "BasicComponents",
+                              "options": {
+                                "version": "4.2.0s3",
+                                "Basics": {
+                                  "ComponentName": "label",
+                                  "HtmlText": "<h1>Tech Industry Comparison</h1>",
+                                  "Data": "",
+                                  "Template": "",
+                                  "Theme": "Dark",
+                                  "FontSize": "13",
+                                  "horizontal": "Center",
+                                  "vertical": "Middle",
+                                  "tooltip": "",
+                                  "AllowUnsafeContent": false,
+                                  "version": "4.2.0s2"
+                                },
+                                "Style": {
+                                  "advanced": "",
+                                  "cssClasses": ""
+                                },
+                                "Alignment": {
+                                  "paddingLeft": 0,
+                                  "paddingRight": 0,
+                                  "paddingTop": 0,
+                                  "paddingBottom": 0,
+                                  "innerPaddingLeft": 0,
+                                  "innerPaddingRight": 0,
+                                  "innerPaddingTop": 0,
+                                  "innerPaddingBottom": 0,
+                                  "titlePaddingLeft": 0,
+                                  "titlePaddingRight": 0,
+                                  "titlePaddingTop": 7,
+                                  "titlePaddingBottom": 7
+                                },
+                                "format": {
+                                  "titleFontSize": 16,
+                                  "titleHorizontal": "Center",
+                                  "titleFontBold": false,
+                                  "titleShadow": false,
+                                  "titleTransparentBackground": false,
+                                  "tileBorderWidth": 0,
+                                  "tileBorderRounding": 0,
+                                  "tileBorderColor": "#000000",
+                                  "tileBackgroundColor": "#000000",
+                                  "tileTransparentBackground": true,
+                                  "tileShadow": true
+                                }
+                              },
+                              "containerId": null,
+                              "components": [],
+                              "widgets": [],
+                              "definitionId": "17",
+                              "hasOnSettingsChange": true
+                            }
+                          },
+                          {
+                            "id": "cec23618-d1cb-bf03-8b36-fdea545f6967",
+                            "layout": {
+                              "row": 7,
+                              "column": 0,
+                              "rowSpan": 17,
+                              "colSpan": 27
+                            },
+                            "component": {
+                              "id": "b3ae1932-6ef3-d362-9aae-5d31bc87fb69",
+                              "key": "Datagrid",
+                              "options": {
+                                "version": "4.5.0a",
+                                "datagridPossibleColumnsWithItself": [
+                                  "<this>"
+                                ],
+                                "selectedColumnPossibleValues": [
+                                  ""
+                                ],
+                                "sortingPossibleValues": [
+                                  ""
+                                ],
+                                "Basics": {
+                                  "Filtering": "disabled",
+                                  "IsFilterVisible": false,
+                                  "ShowPagingControl": false,
+                                  "EnableGrouping": false
+                                },
+                                "FileExport": {
+                                  "ShowExportCsvButton": false,
+                                  "ShowExportExcelButton": false
+                                },
+                                "Style": {
+                                  "EvenRowBackgroundColorOverride": "#ffffff",
+                                  "OddRowBackgroundColorOverride": "#f4f4f4"
+                                },
+                                "Alignment": {
+                                  "paddingLeft": 0,
+                                  "paddingRight": 0,
+                                  "paddingTop": 0,
+                                  "paddingBottom": 0,
+                                  "innerPaddingLeft": 0,
+                                  "innerPaddingRight": 0,
+                                  "innerPaddingTop": 0,
+                                  "innerPaddingBottom": 0,
+                                  "titlePaddingLeft": 0,
+                                  "titlePaddingRight": 0
+                                },
+                                "format": {
+                                  "titleFontBold": false,
+                                  "titleTransparentBackground": false,
+                                  "tileBorderWidth": 0,
+                                  "tileBorderRounding": 0,
+                                  "tileBorderColor": "#000000",
+                                  "tileBackgroundColor": "#000000",
+                                  "tileTransparentBackground": true,
+                                  "tileShadow": true
+                                }
+                              },
+                              "containerId": null,
+                              "components": [],
+                              "widgets": [],
+                              "definitionId": "21",
+                              "hasOnSettingsChange": true
+                            }
+                          }
+                        ],
+                        "definitionId": "50",
+                        "hasOnSettingsChange": true
+                      }
+                    },
+                    {
+                      "id": "b642625e-24a0-e7ef-7b6c-5bb66ec34ab5",
+                      "layout": {
+                        "row": null,
+                        "column": null,
+                        "rowSpan": 12,
+                        "colSpan": 6
+                      },
+                      "component": {
+                        "id": "563058bd-4a7b-3bd0-c6d0-e2edb30e6bf8",
+                        "key": "Datagrid",
+                        "options": {
+                          "version": "4.5.0a",
+                          "datagridPossibleColumnsWithItself": [
+                            "<this>"
+                          ],
+                          "selectedColumnPossibleValues": [
+                            ""
+                          ],
+                          "sortingPossibleValues": [
+                            ""
+                          ],
+                          "Style": {
+                            "EvenRowBackgroundColorOverride": "#ffffff",
+                            "OddRowBackgroundColorOverride": "#f4f4f4"
+                          },
+                          "Alignment": {
+                            "paddingLeft": 0,
+                            "paddingRight": 0,
+                            "paddingTop": 0,
+                            "paddingBottom": 0,
+                            "innerPaddingLeft": 0,
+                            "innerPaddingRight": 0,
+                            "innerPaddingTop": 0,
+                            "innerPaddingBottom": 0,
+                            "titlePaddingLeft": 0,
+                            "titlePaddingRight": 0
+                          },
+                          "format": {
+                            "tileBorderWidth": 0,
+                            "tileBorderRounding": 0,
+                            "tileBorderColor": "#000000",
+                            "tileBackgroundColor": "#000000",
+                            "tileTransparentBackground": true,
+                            "tileShadow": true
+                          }
+                        },
+                        "containerId": null,
+                        "components": [],
+                        "widgets": [],
+                        "definitionId": "21",
+                        "hasOnSettingsChange": true
+                      }
+                    }
+                  ],
+                  "definitionId": "1011",
+                  "hasOnSettingsChange": true
+                },
+                "sectionId": "section_7463"
+              },
+              {
+                "id": "ed279303-ae76-9638-bb55-e50d844be7b6",
+                "layout": {
+                  "row": null,
+                  "column": null,
+                  "rowSpan": 12,
+                  "colSpan": 6
+                },
+                "component": {
+                  "id": "f4ddc12d-dd29-c39c-242b-180986d81ae0",
+                  "key": "FlexPanel",
+                  "options": {
+                    "version": "4.3.0",
+                    "Basics": {
+                      "layout": "horizontaltop",
+                      "maxSize": 0,
+                      "minSize": 350
+                    },
+                    "Style": {
+                      "advanced": "",
+                      "cssClasses": ""
+                    },
+                    "Alignment": {
+                      "paddingLeft": 0,
+                      "paddingRight": 0,
+                      "paddingTop": 0,
+                      "paddingBottom": 0,
+                      "innerPaddingLeft": 0,
+                      "innerPaddingRight": 0,
+                      "innerPaddingTop": 0,
+                      "innerPaddingBottom": 0,
+                      "titlePaddingLeft": 0,
+                      "titlePaddingRight": 0,
+                      "titlePaddingTop": 7,
+                      "titlePaddingBottom": 7
+                    },
+                    "format": {
+                      "titleFontSize": 16,
+                      "titleHorizontal": "Center",
+                      "titleFontBold": false,
+                      "titleShadow": false,
+                      "titleTransparentBackground": false,
+                      "tileBorderWidth": 0,
+                      "tileBorderRounding": 0,
+                      "tileBorderColor": "#000000",
+                      "tileBackgroundColor": "#000000",
+                      "tileTransparentBackground": true,
+                      "tileShadow": true
+                    }
+                  },
+                  "containerId": null,
+                  "components": [],
+                  "widgets": [
+                    {
+                      "id": "1c5c0703-7f32-a870-83b1-814886aecba4",
+                      "layout": {
+                        "row": null,
+                        "column": null,
+                        "rowSpan": 12,
+                        "colSpan": 6
+                      },
+                      "component": {
+                        "id": "c0a60948-c0f7-fcf9-3f10-3a445924c2c8",
+                        "key": "AdvancedCharts",
+                        "options": {
+                          "version": "4.0.1t7",
+                          "Basics": {
+                            "data": {
+                              "_dashboardsType": "data",
+                              "value": "dailyHDBBySym"
+                            },
+                            "stockDisplayType": "CandleStick",
+                            "bucketSize": "OneDay",
+                            "decimalPlaces": 4,
+                            "displayText": "none",
+                            "crosshair": "none",
+                            "showInfoBorder": false,
+                            "showDisclaimer": false,
+                            "showVolume": true
+                          },
+                          "ViewState": {},
+                          "Toolbar": {
+                            "showChartToolbar": true,
+                            "showDrawMenu": true,
+                            "showViewMenu": false,
+                            "showIndicators": true
+                          },
+                          "Style": {
+                            "advanced": "",
+                            "cssClasses": "",
+                            "chartDisplayAreaHorizontalGridLinesColor": "#d8d8d8",
+                            "chartDisplayAreaVerticalGridLinesColor": "#d8d8d8",
+                            "crosshairColor": "#555555",
+                            "chartDisplayAreaBackground": "#ffffff",
+                            "chartDisplayAreaAlternativeBackground": "#ffffff",
+                            "chartBorderColor": "#000000",
+                            "axisTextMajor": "#000000",
+                            "axisTextMinor": "#646464",
+                            "selectedBackground": "#555555",
+                            "selectedForeground": "#ffffff",
+                            "chartDisplayAreaCandleStickUpFill": "#009933",
+                            "chartDisplayAreaCandleStickDownFill": "#d00d00"
+                          },
+                          "Alignment": {
+                            "paddingLeft": 0,
+                            "paddingRight": 0,
+                            "paddingTop": 0,
+                            "paddingBottom": 0,
+                            "innerPaddingLeft": 0,
+                            "innerPaddingRight": 0,
+                            "innerPaddingTop": 0,
+                            "innerPaddingBottom": 0,
+                            "titlePaddingLeft": 0,
+                            "titlePaddingRight": 0,
+                            "titlePaddingTop": 7,
+                            "titlePaddingBottom": 7
+                          },
+                          "format": {
+                            "titleFontSize": 16,
+                            "titleHorizontal": "Center",
+                            "titleFontBold": false,
+                            "titleShadow": false,
+                            "titleTransparentBackground": false,
+                            "tileBorderWidth": 0,
+                            "tileBorderRounding": 0,
+                            "tileBorderColor": "#000000",
+                            "tileBackgroundColor": "#000000",
+                            "tileTransparentBackground": true,
+                            "tileShadow": true
+                          }
+                        },
+                        "containerId": null,
+                        "components": [],
+                        "widgets": [],
+                        "definitionId": "4",
+                        "hasOnSettingsChange": true
+                      }
+                    },
+                    {
+                      "id": "5ca682de-a6bf-244f-cece-a19ba6e46806",
+                      "layout": {
+                        "row": null,
+                        "column": null,
+                        "rowSpan": 12,
+                        "colSpan": 6
+                      },
+                      "component": {
+                        "id": "c9202034-0964-46fb-80b5-83c2ad931305",
+                        "key": "FlexPanel",
+                        "options": {
+                          "version": "4.3.0",
+                          "Basics": {
+                            "layout": "horizontaltop",
+                            "maxSize": 0,
+                            "minSize": 250
+                          },
+                          "Style": {
+                            "advanced": "",
+                            "cssClasses": ""
+                          },
+                          "Alignment": {
+                            "paddingLeft": 0,
+                            "paddingRight": 0,
+                            "paddingTop": 0,
+                            "paddingBottom": 0,
+                            "innerPaddingLeft": 0,
+                            "innerPaddingRight": 0,
+                            "innerPaddingTop": 0,
+                            "innerPaddingBottom": 0,
+                            "titlePaddingLeft": 0,
+                            "titlePaddingRight": 0,
+                            "titlePaddingTop": 7,
+                            "titlePaddingBottom": 7
+                          },
+                          "format": {
+                            "titleFontSize": 16,
+                            "titleHorizontal": "Center",
+                            "titleShadow": false,
+                            "tileBorderWidth": 0,
+                            "tileBorderRounding": 0,
+                            "tileBorderColor": "#000000",
+                            "tileBackgroundColor": "#000000",
+                            "tileTransparentBackground": true,
+                            "tileShadow": true
+                          }
+                        },
+                        "containerId": null,
+                        "components": [],
+                        "widgets": [
+                          {
+                            "id": "fcfa1885-09e7-e36b-7986-b8f5ce68eb10",
+                            "layout": {
+                              "row": null,
+                              "column": null,
+                              "rowSpan": 12,
+                              "colSpan": 6
+                            },
+                            "component": {
+                              "id": "e6b44af0-b433-b9a1-95e1-8ba095f29115",
+                              "key": "BasicComponents",
+                              "options": {
+                                "version": "4.0.0d2",
+                                "ViewState": {
+                                  "Url": "https://bing.com"
+                                },
+                                "Basics": {
+                                  "ComponentName": "webComponent"
+                                },
+                                "Style": {
+                                  "advanced": "",
+                                  "cssClasses": ""
+                                },
+                                "Alignment": {
+                                  "paddingLeft": 0,
+                                  "paddingRight": 0,
+                                  "paddingTop": 0,
+                                  "paddingBottom": 0,
+                                  "innerPaddingLeft": 0,
+                                  "innerPaddingRight": 0,
+                                  "innerPaddingTop": 0,
+                                  "innerPaddingBottom": 0,
+                                  "titlePaddingLeft": 0,
+                                  "titlePaddingRight": 0,
+                                  "titlePaddingTop": 7,
+                                  "titlePaddingBottom": 7
+                                },
+                                "format": {
+                                  "titleFontSize": 16,
+                                  "titleHorizontal": "Center",
+                                  "titleShadow": false,
+                                  "tileBorderWidth": 0,
+                                  "tileBorderRounding": 0,
+                                  "tileBorderColor": "#000000",
+                                  "tileBackgroundColor": "#000000",
+                                  "tileTransparentBackground": true,
+                                  "tileShadow": true
+                                }
+                              },
+                              "containerId": null,
+                              "components": [],
+                              "widgets": [],
+                              "definitionId": "24",
+                              "hasOnSettingsChange": true
+                            }
+                          }
+                        ],
+                        "definitionId": "1011",
+                        "hasOnSettingsChange": true
+                      }
+                    }
+                  ],
+                  "definitionId": "1011",
+                  "hasOnSettingsChange": true
+                },
+                "sectionId": "section_7472"
+              }
+            ],
+            "definitionId": "56",
+            "hasOnSettingsChange": true
+          }
+        }
+      ],
+      "relativeHeight": true,
+      "rowCount": 24,
+      "colCount": 36,
+      "floatable": false
+    }
+  ],
+  "popups": [],
+  "tags": [],
+  "dashboardTheme": "Light",
+  "themeSwitchable": true,
+  "saveTimestamp": null,
+  "relativeHeight": true,
+  "rowCount": 24,
+  "colCount": 36,
+  "floatable": false,
+  "viewState": {
+    "selected": {
+      "_viewType": true,
+      "_default": "0",
+      "value": "0",
+      "_type": "symbol"
+    },
+    ".settings": {
+      "component_199": {
+        "version": 0,
+        "GroupingConfiguration": []
+      },
+      "component_241": {
+        "version": 0,
+        "GroupingConfiguration": []
+      },
+      "component_1045": {
+        "version": 0,
+        "GroupingConfiguration": []
+      },
+      "component_1088": {
+        "version": 0,
+        "GroupingConfiguration": []
+      },
+      "c0a60948-c0f7-fcf9-3f10-3a445924c2c8": {
+        "version": 0,
+        "granularity": "OneDay"
+      },
+      "b3ae1932-6ef3-d362-9aae-5d31bc87fb69": {
+        "version": 0,
+        "GroupingConfiguration": []
+      },
+      "563058bd-4a7b-3bd0-c6d0-e2edb30e6bf8": {
+        "version": 0,
+        "GroupingConfiguration": []
+      }
+    },
+    "dailyHDBBySym": {
+      "syms": {
+        "_viewType": true,
+        "_type": "symbol",
+        "_default": "IBM",
+        "value": "IBM"
+      }
+    }
+  },
+  "data": {
+    "dailyHDBBySym": {
+      "_autoExec": true,
+      "_columns": [
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Volume",
+        "Date"
+      ],
+      "_dataType": "analytic",
+      "_dataSource": "kdb",
+      "_connection": "dailyHDB",
+      "_mappings": {
+        "key": "Open",
+        "mappings": {},
+        "value": "High"
+      },
+      "_maxRows": "8000",
+      "_subscriptionType": "static",
+      "_subscriptionInterval": 3,
+      "_layout": [
+        {
+          "isExpanded": true,
+          "weight": 2
+        },
+        {
+          "isExpanded": false,
+          "weight": 1
+        },
+        {
+          "isExpanded": false,
+          "weight": 1
+        },
+        {
+          "isExpanded": true,
+          "weight": 0
+        },
+        {
+          "isExpanded": true,
+          "weight": 2
+        }
+      ],
+      "_selectedAnalytic": ".hdb.queryBySym",
+      "_analyticParams": [
+        {
+          "id": "syms",
+          "name": "syms",
+          "type": "symbol",
+          "required": false,
+          "value": "<%dailyHDBBySym/syms%>",
+          "isViewState": true
+        }
+      ],
+      "_subscriptionKey": "",
+      "_isStreamingSubscription": false,
+      "_hasUpdateQuery": false,
+      "_updateQueryString": "",
+      "_updateType": "query",
+      "_pageSize": 2000,
+      "_serverPaging": false
+    }
+  },
+  "worksheetPadding": 10,
+  "widgetsSpacing": 0,
+  "borderColor": "000000",
+  "borderBackground": "000000",
+  "transparentBackground": true,
+  "borderWidth": 0,
+  "borderRounding": 0,
+  "borderSpacing": 0,
+  "borderShadow": true,
+  "enableShareDashboard": false,
+  "notifications": {
+    "Notifications": {
+      "_Version": "4.2.0s2",
+      "Enabled": true,
+      "InBrowserNotifications": false,
+      "Position": "Bottom Right",
+      "MaxVisibleCount": 3,
+      "FadeOut": 5,
+      "Icon": "fa-bell-o",
+      "Sound": "beep",
+      "SoundVolume": 100,
+      "Grouping": false,
+      "GroupingInterval": 1,
+      "triggers": []
+    }
+  },
+  "showLoadingIndicators": true,
+  "unsavedViewerPrompt": false,
+  "advancedCss": "",
+  "cssClasses": "",
+  "viewStateBinding": false,
+  "wasChanged": false,
+  "version": "4.4.0p7"
+}

@@ -34,7 +34,7 @@ $[not () ~ key hsym `$getenv `SYM_ID_DIRECTORY;
         ]
  ];
 
-//For incoming queries, it will be parsed to check if its a select statement.
+//For incoming direct queries, it will be parsed to check if its a select statement.
 //If so, to add int if sym exists
 queryParse:{
 	parseBoolean:@[{not first enlist[?] = first parse x};x;{:1b}];
@@ -66,7 +66,19 @@ queryParse:{
 	.log.out .Q.s1 parseTree;
         :parseTree
 	
-	};
+ };
+
+//Wrapper to perform the same actions as queryParse when this is done through UI
+queryBySym:{[syms]
+	if[11h <> abs type syms;'"Syms is not symbol type"]
+	syms,:();
+	wClause:enlist (in;`sym;syms);
+	ids: value ?[symIDDirectory;wClause;();enlist[`int]!enlist[`id]];
+	wClause:enlist[(in;`int;ids)],wClause;
+	aClause:`Open`High`Low`Close`Volume`Date!`open`high`low`close`volume`date;
+	//TO-DO include arbitary limits
+	:?[`dailyFinancialData;wClause;0b;aClause]
+ };
 	
 
 reloadDB:{
