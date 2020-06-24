@@ -14,6 +14,7 @@
 system "l ",getenv[`QSCRIPTS_DIR],"/log.q";
 system "l ",getenv[`QSCRIPTS_DIR],"/cron.q";
 system "l ",getenv[`QSCRIPTS_DIR],"/alphavantage.q";
+@[system;"l p.q";{.log.err "p.q not loaded, embedPy functionality will have issues"}];
 
 //Framework for scrapping daily data
 //Run through list of sym to scrap every allowed interval
