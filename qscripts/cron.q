@@ -25,6 +25,7 @@ runJob:{.log.out "Running cronJob --- ",.Q.s1 (x`function;x`args);
 /define analytics to add job to cron
 addJob:{[function;freq;args;stime;etime;enabled]
 	//freq is in terms of day
+	if[neg[type freq] in 5 6 7 8h;freq:`float$freq];
 	if[stime=-0wz;stime:.z.Z];
 	.log.out "Adding cronJob --- ",.Q.s1 `function`args`freq`stime`etime`enabled!(function;args;freq;stime;etime;enabled);
 	@[{`.cron.jobs upsert x};

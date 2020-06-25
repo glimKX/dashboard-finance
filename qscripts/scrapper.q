@@ -121,4 +121,9 @@ scrapeMain:{[]
 .log.out "Declaring timer functions";
 .cron.addJob[`.scrapper.scrapeMain;1%60*24;::;-0wz;0wz;1b];
 
+//Add on script 
+system "l ",getenv[`QSCRIPTS_DIR],"/scrapperEmbedPyAddOn.q";
+
 .log.out "End of Init";
+
+
