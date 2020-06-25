@@ -57,7 +57,7 @@ updateSymMeta:{
 	syms:raze flip key symIDDirectory;
 	.debug.data:data:pullDataFromYFinance each syms;
 	//due to some ticker having weird beta, exception clause here to fix it
-	data:update beta:0nf from data where -9 <> type each data[`beta]
+	data:update beta:0nf from data where -9 <> type each data[`beta];
 	`.scrapper.symMetaLinkage upsert `sym xkey `sym xcol data;
 	symMetaLinkageLoc set symMetaLinkage;
 	.log.out "Sym Meta Linkage Updated"
