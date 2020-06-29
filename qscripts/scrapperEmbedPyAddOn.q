@@ -38,6 +38,7 @@ yf:.p.import[`yfinance];
 pullDataFromYFinance:{[syms]
 	//To prevent unsupported multiple sym in ticker class
 	if[1<>count syms;syms:first syms];
+	.log.out .Q.s syms;
 	data:yf[`:Ticker]syms;
 	//data is a ticker class and info returns a dictionary
 	//have to convert back to q in order to index
@@ -47,6 +48,9 @@ pullDataFromYFinance:{[syms]
 	dict:data[`:info][`];
 	//hardcoded list of data to keep
 	data:`symbol`sector`industry`longBusinessSummary`beta`currency`marketCap`logo_url#dict;
+	//random null causing issues
+	if[(::) ~ data`beta;data[`beta]:0nf];
+        data:@[data;`symbol`sector`industry`currency`longBusinessSummary where -9h = type each data[`symbol`sector`industry`currency`longBusinessSummary];string];
 	:update `$symbol, `$sector,`$industry, `$currency, `float$marketCap from data
  };
 
