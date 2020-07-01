@@ -21,6 +21,21 @@ hookURL:enlist getenv `FINNHUB_URL;
 apiKey:enlist getenv `FINNHUBAPI;
 
 //Finnhub schemas
+//Schema will be used for uj before saving down
+
+//Finnhub mapping config
+/.log.out "Loading in mapping config for ingestion";
+mappingConfigDict:()!();
+mappingConfigDir:hsym `$getenv[`MAPPINGCONFIG_DIR];
+listOfConfig:key mappingConfigDir;
+if[not () ~ listOfConfig;
+	listOfConfigName:(` vs' listOfConfig)[;0];
+	listOfConfig:` sv ' mappingConfigDir,/:listOfConfig;
+	listOfConfigName set' ("SS*";enlist ",") 0:/:listOfConfig;
+	{mappingConfigDict[x]: value x} each listOfConfigName;
+ ];
+
+typeMapping:"FJH"!`float`long`short;
 
 //Start of API
 //Query builder, takes two compulsory input (the function to run and symbol)
@@ -70,22 +85,36 @@ ingestReportedFinancial:{[res]
 	//Note that this uses financials-report hook
 	//This has the following structure
 	//res[`data] -> Year -> report -> Balance Sheet, CF, PL
-	distinctYears:exec distinct year from res[`data];
-	ingestBSReport[res] each distinctYears;
-	ingestCFReport[res] each distinctYears;
-	ingestPLReport[res] each distinctYears;
+	data:res[`data];
+	distinctYears:exec distinct year from data;
+	//Produce a table of BS data
+	//Need to append symbol before saving down
+	ingestBSReport[data] each distinctYears;
+	ingestCFReport[data] each distinctYears;
+	/ingestPLReport[data] each distinctYears;
+	//Save down data
  };
 
-ingestBSReport:{[res;yr]
+ingestBSReport:{[data;yr]
+	bsData:raze exec report[`bs] from data where year = yr;
+	//fix value column
+	bsData:update `$concept from removeNA .Q.id bsData;
+	mappingConfigToUse:mappingConfigDict[`finnhubBSMapping];
+	colsToIngest:mappingConfigToUse[`finnHubConceptName] inter bsData[`concept];
+	bsDataToIngest:exec colsToIngest#concept!value1 from bsData;
+	typeMappingForData:exec colsToIngest#finnHubConceptName!typ from mappingConfigToUse;	
+	colNameMappingForData:value exec colsToIngest#finnHubConceptName!colName from mappingConfigToUse;
+	data:enlist colNameMappingForData!(typeMapping raze value typeMappingForData)$'value bsDataToIngest;
+	update year:yr from data
  };
 
-ingestCFReport:{[res;yr]
+ingestCFReport:{[data;yr]
  };
 
-ingestPLReport:{[res;yr]
+ingestPLReport:{[data;yr]
  };
 
-removeNA:{[res]
+removeNA:{[data]
 	//This is required when there are NA in float expected columns
 	//Assumes that value column was already sanitized
 	update value1:0nf from res where (10 = type each res[`value1])
