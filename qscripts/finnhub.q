@@ -20,9 +20,6 @@
 hookURL:enlist getenv `FINNHUB_URL;
 apiKey:enlist getenv `FINNHUBAPI;
 
-//Finnhub schemas
-//Schema will be used for uj before saving down
-
 //Finnhub mapping config
 /.log.out "Loading in mapping config for ingestion";
 mappingConfigDict:()!();
@@ -37,13 +34,23 @@ if[not () ~ listOfConfig;
 
 typeMapping:"FJH"!`float`long`short;
 
+//Finnhub schemas
+//Schema will be used for uj before saving down
+base:`year`sym!"FS"$\:();
+schemaDict:()!();
+if[count mappingConfigDict;
+	schemaDict:{schema:exec colName, raze[typ] from x;
+		flip base,schema[`colName]!schema[`typ]$\:()
+	} each mappingConfigDict
+ ];
+	
+
 //Start of API
 //Query builder, takes two compulsory input (the function to run and symbol)
 buildAndRunQuery:{[args]
 	/.log.out "In .finnhub.buildQuery --- ",.Q.s1 args;
 	if[not all `function`symbol in key args;'"Missing Inputs"];
 	args:@[(enlist[(::)]!enlist[" "]),args;where 10h<>type each args;string];
-	//TODO - Add options args here
 	optArgs:`function`symbol _ 1 _ args;
 	//Convoluted ifs, no validation of 1 letter options but that would type error
 	optArgs:$[1 = count optArgs;
@@ -81,22 +88,26 @@ convertToTable:{[res]
 	:(mdata;data)
  };
 
+//buildAndRunQuery `function`symbol!("financials-reported";`AAPL)
 ingestReportedFinancial:{[res]
 	//Note that this uses financials-report hook
 	//This has the following structure
 	//res[`data] -> Year -> report -> Balance Sheet, CF, PL
 	data:res[`data];
+	symbol:`$res[`symbol];
 	distinctYears:exec distinct year from data;
 	//Produce a table of BS data
 	//Need to append symbol before saving down
-	ingestBSReport[data] each distinctYears;
-	ingestCFReport[data] each distinctYears;
-	/ingestPLReport[data] each distinctYears;
+	BSReport: raze ingestBSReport[data;symbol] each distinctYears;
+	ingestCFReport[data;symbol] each distinctYears;
+	/ingestPLReport[data;symbol] each distinctYears;
 	//Save down data
  };
 
-ingestBSReport:{[data;yr]
+ingestBSReport:{[data;symbol;yr]
 	bsData:raze exec report[`bs] from data where year = yr;
+	//stop ingestion if data is empty
+	if[() ~  bsData;:schemaDict[`finnhubBSMapping]];
 	//fix value column
 	bsData:update `$concept from removeNA .Q.id bsData;
 	mappingConfigToUse:mappingConfigDict[`finnhubBSMapping];
@@ -105,19 +116,19 @@ ingestBSReport:{[data;yr]
 	typeMappingForData:exec colsToIngest#finnHubConceptName!typ from mappingConfigToUse;	
 	colNameMappingForData:value exec colsToIngest#finnHubConceptName!colName from mappingConfigToUse;
 	data:enlist colNameMappingForData!(typeMapping raze value typeMappingForData)$'value bsDataToIngest;
-	update year:yr from data
+	schemaDict[`finnhubBSMapping] uj update year:yr, sym:symbol from data
  };
 
-ingestCFReport:{[data;yr]
+ingestCFReport:{[data;symbol;yr]
  };
 
-ingestPLReport:{[data;yr]
+ingestPLReport:{[data;symbol;yr]
  };
 
 removeNA:{[data]
 	//This is required when there are NA in float expected columns
 	//Assumes that value column was already sanitized
-	update value1:0nf from res where (10 = type each res[`value1])
+	update value1:0nf from data where (10 = type each data[`value1])
  };
 
 /.log.out "Loaded .finnhub library";
