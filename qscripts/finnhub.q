@@ -99,9 +99,19 @@ ingestReportedFinancial:{[res]
 	//Produce a table of BS data
 	//Need to append symbol before saving down
 	BSReport: raze ingestBSReport[data;symbol] each distinctYears;
-	ingestCFReport[data;symbol] each distinctYears;
-	/ingestPLReport[data;symbol] each distinctYears;
+	CFReport: raze ingestCFReport[data;symbol] each distinctYears;
+	ICReport: raze ingestICReport[data;symbol] each distinctYears;
 	//Save down data
+ };
+
+mapData:{[data;symbol;yr;reportType]
+	mappingConfigToUse:mappingConfigDict[reportType];
+	colsToIngest:mappingConfigToUse[`finnHubConceptName] inter data[`concept];
+	dataToIngest:exec colsToIngest#concept!value1 from data;
+	typeMappingForData:exec colsToIngest#finnHubConceptName!typ from mappingConfigToUse;
+	colNameMappingForData:value exec colsToIngest#finnHubConceptName!colName from mappingConfigToUse;
+	data:enlist colNameMappingForData!(typeMapping raze value typeMappingForData)$'value dataToIngest;
+	schemaDict[reportType] uj update year:yr, sym:symbol from data
  };
 
 ingestBSReport:{[data;symbol;yr]
@@ -110,19 +120,24 @@ ingestBSReport:{[data;symbol;yr]
 	if[() ~  bsData;:schemaDict[`finnhubBSMapping]];
 	//fix value column
 	bsData:update `$concept from removeNA .Q.id bsData;
-	mappingConfigToUse:mappingConfigDict[`finnhubBSMapping];
-	colsToIngest:mappingConfigToUse[`finnHubConceptName] inter bsData[`concept];
-	bsDataToIngest:exec colsToIngest#concept!value1 from bsData;
-	typeMappingForData:exec colsToIngest#finnHubConceptName!typ from mappingConfigToUse;	
-	colNameMappingForData:value exec colsToIngest#finnHubConceptName!colName from mappingConfigToUse;
-	data:enlist colNameMappingForData!(typeMapping raze value typeMappingForData)$'value bsDataToIngest;
-	schemaDict[`finnhubBSMapping] uj update year:yr, sym:symbol from data
+	mapData[bsData;symbol;yr;`finnhubBSMapping]
  };
 
 ingestCFReport:{[data;symbol;yr]
+	cfData:raze exec report[`cf] from data where year = yr;
+	//stop ingestion if data is empty
+	if[() ~ cfData;:schemaDict[`finnhubCFMapping]];
+	//fix value column
+	cfData:update `$concept from removeNA .Q.id cfData;
+	mapData[cfData;symbol;yr;`finnhubCFMapping]
  };
 
-ingestPLReport:{[data;symbol;yr]
+ingestICReport:{[data;symbol;yr]
+	icData:raze exec report[`ic] from data where year = yr;
+	if[() ~ icData;:schemaDict[`finnhubICMapping]];
+	//fix value column
+        icData:update `$concept from removeNA .Q.id icData;
+        mapData[icData;symbol;yr;`finnhubICMapping]
  };
 
 removeNA:{[data]
