@@ -71,23 +71,6 @@ buildAndRunQuery:{[args]
 
 
 //Data from finnHub is no schema compliant and needs to be parsed/cleaned
-//Assumptions are made to be generic, if not true, needs config to improve ingestion flexibility
-convertToTable:{[res]
-	/.log.out "In .alphavantage.convertToTable";
-	if[99h <> type res;.log.err "Result is not a dictionary, unable to convert";'"Not dictionary"];
-	mdata:res[key[res] 0];
-	data:res[key[res] 1];
-	//Assumption is that when we query for financial data, its always in the schema of OHLCV
-	//TODO - To use dataTime instead to accomodate data coming in as timestamps
-	data:([] date:"D"$string key[data]),'flip `open`high`low`close`volume!"FFFFF"$value flip value[data];
-	mdataCols:cols .Q.id enlist mdata;
-	mdataCols:mdataCols where any mdataCols like/: ("*Information*";"*Symbol*";"*Last*");
-	mdata:cols[metaData] xcol mdataCols#.Q.id enlist mdata;	
-	mdata:update `$sym, "P"$lastUpdated from mdata;
-	data:update sym:count[i]#mdata[`sym] from data;
-	:(mdata;data)
- };
-
 //buildAndRunQuery `function`symbol!("financials-reported";`AAPL)
 ingestReportedFinancial:{[res]
 	//Note that this uses financials-report hook
@@ -101,7 +84,8 @@ ingestReportedFinancial:{[res]
 	BSReport: raze ingestBSReport[data;symbol] each distinctYears;
 	CFReport: raze ingestCFReport[data;symbol] each distinctYears;
 	ICReport: raze ingestICReport[data;symbol] each distinctYears;
-	//Save down data
+	//Output data
+	(BSReport;CFReport;ICReport)
  };
 
 mapData:{[data;symbol;yr;reportType]
