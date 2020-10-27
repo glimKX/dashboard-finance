@@ -80,7 +80,7 @@ getSym:{[x]
 runScrape:{[dict]
 	//enter this analytic with an each of symIDDirectory
 	.log.out "Running runScrape for --- ",.Q.s1 dict;
-	args:`function`symbol!(`TIME_SERIES_DAILY;dict`sym);
+	args:`function`symbol!(`TIME_SERIES_DAILY_ADJUSTED;dict`sym);
 	//add in functionality to check if sym is new, if so download full release
 	if[0N ~ first .scrapper.symIDDirectory dict`sym;
         	args[`outputsize]:`full

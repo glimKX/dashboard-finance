@@ -96,7 +96,7 @@ queryBySym:{[syms]
  };
 
 pullSymByIndusty:{[industry]
- 	exec 5#sym from `marketCap xdesc select sym,marketCap from symMetaLinkage where sector =`Technology
+ 	5#select sym,marketCap from `marketCap xdesc select sym,marketCap from symMetaLinkage where sector = industry
  };
 	
 
