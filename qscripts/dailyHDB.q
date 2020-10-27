@@ -34,6 +34,21 @@ $[not () ~ key hsym `$getenv `SYM_ID_DIRECTORY;
         ]
  ];
 
+//linkage schema
+symMetaLinkageSchema:`sym xkey flip `sym`sector`industry`longBusinessSummary`beta`currency`marketCap`logo_url!"SSS*FSF*"$\:();
+$[not () ~ key symMetaLinkageLoc:hsym `$getenv `SYM_META_LINKAGE;
+        [
+                .log.out "Loading symMeta Linkage";
+                symMetaLinkage:get symMetaLinkageLoc;
+                .log.out "Loaded symMeta Linkage"
+        ];
+        [
+                .log.out "Using symMeta Linkage Schema";
+                symMetaLinkageLoc:hsym `$getenv `SYM_META_LINKAGE;
+                symMetaLinkage:symMetaLinkageSchema
+        ]
+ ];
+
 //For incoming direct queries, it will be parsed to check if its a select statement.
 //If so, to add int if sym exists
 queryParse:{
@@ -79,6 +94,10 @@ queryBySym:{[syms]
 	//TO-DO include arbitary limits
 	:?[`dailyFinancialData;wClause;0b;aClause]
  };
+
+pullSymByIndusty:{[industry]
+ 	exec 5#sym from `marketCap xdesc select sym,marketCap from symMetaLinkage where sector =`Technology
+ };
 	
 
 reloadDB:{
@@ -86,6 +105,9 @@ reloadDB:{
 	system "l .";
 	if[not () ~ key symIDDirLoc;
 		symIDDirectory:get symIDDirLoc;
+	];
+	if[not () ~ key symMetaLinkageLoc;
+		symMetaLinkage:get symMetaLinkageLoc
 	];
 	.log.out "HDB Re-loaded";
  };

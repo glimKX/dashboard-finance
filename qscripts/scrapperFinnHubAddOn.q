@@ -27,12 +27,16 @@ if[enlist[`dailyFinancialData] ~ key ` sv hsym[`$getenv `HDB_DAILY_DIR],`0;
 	} each schemaNames;
 	system "d .";
 	.Q.chk[`:.];
-	system "l ",get env `HDB_DAILY_DIR;
+	system "l ",getenv `HDB_DAILY_DIR;
 	system "d .scrapper";
 	.log.out "Re-loaded New FinnHub HDB";
  ];
 
-getReportedFinancialSym:{
+getReportedFinancialSym:{[]
+	//instead of pulling this information daily
+	//it should run as a monthly report
+	allSyms:select id,sym from .scrapper.symIDDirectory;
+	:allSyms
  };
 
 runReportedFinancialScrape:{[dict]
@@ -40,12 +44,35 @@ runReportedFinancialScrape:{[dict]
 	.log.out "Running runReportedFinancialScrape for --- ",.Q.s1 dict;
 	args:`function`symbol!("financials-reported";dict`sym);
 	res:.finnhub.buildAndRunQuery[args];
-	:.finnhub.ingestReportedFinancial[res]
+	if[() ~ res`data;
+		.log.out "In .scrapper.runReportedFinancial Scrape --- Data pulled from finnhub is empty for sym: ",res`symbol;
+		:()
+	];
+	dict:dict,enlist[`data]!enlist .finnhub.ingestReportedFinancial[res];
+	writeReportedFinancialScrape[dict]
+ };
+
+writeReportedFinancialScrape:{[dict]
+	//enter this analytic with ID on where to save and the report
+	.debug.write:dict;
+	existingData:{[id;tab] enlist[`int] _ ?[tab;enlist(=;`int;id);0b;()]}[dict`id] each key dict[`data];
+	existingData:key[dict `data]!{[s;tab] delete from tab where sym = s}[dict[`sym]] each existingData;
+	//to delete data then write to existing ID location (might go with this to bypass api limits)
+	writeEach[dict[`data];existingData;dict`id] each key dict[`data];
+	//2 models - 1) read and write, 2) read all then write. TBC on choice
+ };
+
+writeEach:{[newData;existingData;id;reportKey]
+	toWriteDown:existingData[reportKey] uj newData[reportKey];
+	toWriteDown:update `p#sym from `sym`year xasc toWriteDown;
+	sv[`;(hsym `$string id;reportKey;`)] set .Q.en[`:.;toWriteDown];
  };
 
 //Main ReportedFinancial Function
 scrapeReportedFinancialMain:{[]
  	.log.out "Begin Reported Financial Scrapper function";
+	allSyms:getReportedFinancialSym[];
+	runReportedFinancialScrape each allSyms;
 	.log.out "End of Reported Financial Scrapper Function";
  };
 
@@ -54,6 +81,6 @@ scrapeReportedFinancialMain:{[]
 //Add updateSymMeta to the timer
 //`datetime$.z.d+1 to use the next closest EOD time
 .log.out "Adding scrapperFinnHubAddOn Timer Functions";
-/.cron.addJob[`.scrapper.scrapeReportedFinancialMain;1;::;-0wz;0wz;1b];
+.cron.addJob[`.scrapper.scrapeReportedFinancialMain;1;::;-0wz;0wz;1b];
 
 .log.out "End of FinnHub Add-on Init";

@@ -85,13 +85,14 @@ ingestReportedFinancial:{[res]
 	CFReport: raze ingestCFReport[data;symbol] each distinctYears;
 	ICReport: raze ingestICReport[data;symbol] each distinctYears;
 	//Output data
-	(BSReport;CFReport;ICReport)
+	`finnhubBSReport`finnhubCFReport`finnhubICReport!(BSReport;CFReport;ICReport)
  };
 
 mapData:{[data;symbol;yr;reportType]
 	mappingConfigToUse:mappingConfigDict[reportType];
 	colsToIngest:mappingConfigToUse[`finnHubConceptName] inter data[`concept];
 	dataToIngest:exec colsToIngest#concept!value1 from data;
+	if[not count dataToIngest;.log.out "In .finnhub.mapData --- Data is empty, skipping ingestion";:schemaDict[reportType]];
 	typeMappingForData:exec colsToIngest#finnHubConceptName!typ from mappingConfigToUse;
 	colNameMappingForData:value exec colsToIngest#finnHubConceptName!colName from mappingConfigToUse;
 	data:enlist colNameMappingForData!(typeMapping raze value typeMappingForData)$'value dataToIngest;

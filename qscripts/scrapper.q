@@ -123,6 +123,7 @@ scrapeMain:{[]
 
 //Add on script 
 system "l ",getenv[`QSCRIPTS_DIR],"/scrapperEmbedPyAddOn.q";
+system "l ",getenv[`QSCRIPTS_DIR],"/scrapperFinnHubAddOn.q";
 
 .log.out "End of Init";
 
