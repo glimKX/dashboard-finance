@@ -48,9 +48,10 @@ $[not () ~ key hsym `$getenv `SYM_ID_DIRECTORY;
 	]
  ];
 
-if[$[`;()] ~ key hsym `$getenv `HDB_DAILY_DIR;
+if[{lvDown:key x;not `dailyFinancialData in distinct raze key each ` sv' x,'lvDown} hsym `$getenv `HDB_DAILY_DIR;
 	.log.out "New HDB, initialising first partition";
 	sv[`;(hsym `0;`dailyFinancialData;`)] set .Q.en[`:.;dailyFinData];
+	.Q.chk[`:.];
 	system "d .";
 	system "l ",getenv `HDB_DAILY_DIR;
 	system "d .scrapper";
@@ -71,7 +72,7 @@ getSym:{[x]
 	symsToScrape:distinct x?scrapperConfig;
 	//Remove syms which are updated recently
 	//Should a table where we can perform each
-	baseDict:select from symIDDirectory where sym in symsToScrape, -[.z.D;1]>`date$lastUpdated;
+	baseDict:select from symIDDirectory where sym in symsToScrape, -[.z.D;0]>`date$lastUpdated;
 	symsToScrape:symsToScrape except key[symIDDirectory]`sym;
 	//hardcoded number for ID
 	baseDict upsert flip `id`sym!(count[symsToScrape]?20;symsToScrape)

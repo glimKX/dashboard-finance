@@ -90,14 +90,44 @@ queryBySym:{[syms]
 	wClause:enlist (in;`sym;syms);
 	ids: value ?[symIDDirectory;wClause;();enlist[`int]!enlist[`id]];
 	wClause:enlist[(in;`int;ids)],wClause;
-	aClause:`Open`High`Low`Close`Volume`Date!`open`high`low`close`volume`date;
+	aClause:`Open`High`Low`Close`Volume`Date!`open`high`low`adjustedClose`volume`date;
 	//TO-DO include arbitary limits
 	:?[`dailyFinancialData;wClause;0b;aClause]
  };
 
-pullSymByIndusty:{[industry]
- 	5#select sym,marketCap from `marketCap xdesc select sym,marketCap from symMetaLinkage where sector = industry
+pullSymByIndusty:{[ind]
+ 	5#select from `marketCap xdesc select sym,marketCap, beta, logo_url from symMetaLinkage where sector = ind
  };
+
+queryForPartition:{[syms]
+	if[11h <> abs type syms;'"Syms is not symbol type"];
+        syms: enlist syms;
+        wClause:enlist (in;`sym;syms);
+        ids: value ?[symIDDirectory;wClause;();enlist[`int]!enlist[`id]];
+	wClause:enlist[(in;`int;ids)],wClause
+ };
+
+queryForMetrics:{[tab;syms;col]
+	wClause: queryForPartition[syms];
+	aClause:$[1 = count col;;raze] {enlist[x]!enlist (last;x)} each col;
+	bClause:enlist[`sym]!enlist `sym;
+	:?[tab;wClause;bClause;aClause]
+ };
+
+queryForBS:{[syms]
+	col:`year`cashAndCashEquivalents`accountsReceivableCurrent`accountPayableCurrent`assetsCurrent`liabilitiesCurrent;
+	tab:`finnhubBSReport;
+	queryForMetrics[tab;syms;col]
+ };
+
+queryForTop5SymMetrics:{[ind]
+	syms:exec 5#sym from `marketCap xdesc select sym,marketCap from symMetaLinkage where sector = ind;
+	tab:queryForBS[syms];
+	//pivot for easier comparison
+	(flip enlist[`metrics]!enlist 1 _ cols tab)!flip value[key[tab]`sym]!flip value flip value[tab]
+ };
+	
+	
 	
 
 reloadDB:{

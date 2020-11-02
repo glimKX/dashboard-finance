@@ -18,7 +18,7 @@ hookURL:";" vs getenv `ALPHAVANTAGE_URL;
 apiKey:enlist getenv `ALPHAVANTAGEAPI;
 
 //Alphavantage financial data schema
-dailyFinData:flip `open`high`low`close`volume!"FFFFF"$\:();
+dailyFinData:flip `open`high`low`close`adjustedClose`volume`dividend`splitCoefficient!"FFFFFFFF"$\:();
 metaData:flip `information`sym`lastUpdated!"*ST"$\:();
 
 //Start of API
@@ -47,8 +47,8 @@ buildAndRunQuery:{[args]
  };
 
 
-//Data from Alphavantage is no schema compliant and needs to be parsed/cleaned
-//Assumptions are made to be generic, if not true, needs config to improve ingestion flexibility
+//Data from Alphavantage is not schema compliant and needs to be parsed/cleaned
+//Assumptions are made to be write the code but a better solution will be to have config to improve ingestion flexibility
 convertToTable:{[res]
 	.log.out "In .alphavantage.convertToTable";
 	if[99h <> type res;.log.err "Result is not a dictionary, unable to convert";'"Not dictionary"];
@@ -56,7 +56,7 @@ convertToTable:{[res]
 	data:res[key[res] 1];
 	//Assumption is that when we query for financial data, its always in the schema of OHLCV
 	//TODO - To use dataTime instead to accomodate data coming in as timestamps
-	data:([] date:"D"$string key[data]),'flip `open`high`low`close`volume!"FFFFF"$value flip value[data];
+	data:([] date:"D"$string key[data]),'flip `open`high`low`close`adjustedClose`volume`dividend`splitCoefficient!"FFFFFFFF"$value flip value[data];
 	mdataCols:cols .Q.id enlist mdata;
 	mdataCols:mdataCols where any mdataCols like/: ("*Information*";"*Symbol*";"*Last*");
 	mdata:cols[metaData] xcol mdataCols#.Q.id enlist mdata;	

@@ -2,7 +2,7 @@
   "id": "9c2143e2-bb70-fda3-ae8f-51f2a81fe720",
   "name": "FinDash - Tech",
   "creationDate": "Tue, 23 Jun 2020 12:59:35 GMT",
-  "lastUpdateDate": "Tue, 23 Jun 2020 13:58:59 GMT",
+  "lastUpdateDate": "Mon, 02 Nov 2020 13:23:06 GMT",
   "thumb": null,
   "screenDetails": [
     {
@@ -209,7 +209,7 @@
                               "id": "d2bea1b7-229f-c3d3-3980-5f685903b471",
                               "key": "BasicComponents",
                               "options": {
-                                "version": "4.2.0s3",
+                                "version": "4.5.0",
                                 "Basics": {
                                   "ComponentName": "label",
                                   "HtmlText": "<h1>Tech Industry Comparison</h1>",
@@ -268,7 +268,7 @@
                               "row": 7,
                               "column": 0,
                               "rowSpan": 17,
-                              "colSpan": 27
+                              "colSpan": 36
                             },
                             "component": {
                               "id": "b3ae1932-6ef3-d362-9aae-5d31bc87fb69",
@@ -276,19 +276,34 @@
                               "options": {
                                 "version": "4.5.0a",
                                 "datagridPossibleColumnsWithItself": [
-                                  "<this>"
+                                  "<this>",
+                                  "sym",
+                                  "marketCap",
+                                  "beta",
+                                  "logo_url"
                                 ],
                                 "selectedColumnPossibleValues": [
-                                  ""
+                                  "sym",
+                                  "marketCap",
+                                  "beta",
+                                  "logo_url"
                                 ],
                                 "sortingPossibleValues": [
-                                  ""
+                                  "",
+                                  "sym",
+                                  "marketCap",
+                                  "beta",
+                                  "logo_url"
                                 ],
                                 "Basics": {
                                   "Filtering": "disabled",
                                   "IsFilterVisible": false,
                                   "ShowPagingControl": false,
-                                  "EnableGrouping": false
+                                  "EnableGrouping": false,
+                                  "Data": {
+                                    "_dashboardsType": "data",
+                                    "value": "pullSymByIndustry"
+                                  }
                                 },
                                 "FileExport": {
                                   "ShowExportCsvButton": false,
@@ -319,6 +334,61 @@
                                   "tileBackgroundColor": "#000000",
                                   "tileTransparentBackground": true,
                                   "tileShadow": true
+                                },
+                                "datagridPossibleColumns": [
+                                  "sym",
+                                  "marketCap",
+                                  "beta",
+                                  "logo_url"
+                                ],
+                                "highlightTargetPossibleValues": [
+                                  "sym",
+                                  "marketCap",
+                                  "beta",
+                                  "logo_url",
+                                  "*"
+                                ],
+                                "ColumnsConfiguration": [
+                                  {
+                                    "Field": "sym",
+                                    "DisplayName": "sym",
+                                    "WidthWeight": 100,
+                                    "MinWidthAbsolute": 100,
+                                    "TextAlign": "left"
+                                  },
+                                  {
+                                    "Field": "marketCap",
+                                    "DisplayName": "marketCap",
+                                    "Format": "Smart Number",
+                                    "Currency": "USD",
+                                    "WidthWeight": 140,
+                                    "MinWidthAbsolute": 140,
+                                    "IsReadonly": true,
+                                    "TextAlign": "right"
+                                  },
+                                  {
+                                    "Field": "beta",
+                                    "DisplayName": "beta",
+                                    "Format": "Formatted Number",
+                                    "WidthWeight": 100,
+                                    "IsReadonly": true
+                                  },
+                                  {
+                                    "Field": "logo_url",
+                                    "DisplayName": "logo_url",
+                                    "WidthWeight": 100,
+                                    "IsReadonly": true,
+                                    "IsSelectable": false,
+                                    "Template": "<img height=\"20\" width=\"20\" src=\"{{logo_url}}\">"
+                                  }
+                                ],
+                                "Selection": {
+                                  "Mode": "Cell",
+                                  "RowSelectionColumn": "sym",
+                                  "SelectedCellValue": {
+                                    "_dashboardsType": "viewstate",
+                                    "value": "dailyHDBBySym/syms"
+                                  }
                                 }
                               },
                               "containerId": null,
@@ -455,46 +525,22 @@
                         "colSpan": 6
                       },
                       "component": {
-                        "id": "c0a60948-c0f7-fcf9-3f10-3a445924c2c8",
-                        "key": "AdvancedCharts",
+                        "id": "c0470231-3b28-0c96-2672-5ad64f6003a8",
+                        "key": "Panel",
                         "options": {
-                          "version": "4.0.1t7",
+                          "version": "4.4.0",
                           "Basics": {
-                            "data": {
-                              "_dashboardsType": "data",
-                              "value": "dailyHDBBySym"
-                            },
-                            "stockDisplayType": "CandleStick",
-                            "bucketSize": "OneDay",
-                            "decimalPlaces": 4,
-                            "displayText": "none",
-                            "crosshair": "none",
-                            "showInfoBorder": false,
-                            "showDisclaimer": false,
-                            "showVolume": true
-                          },
-                          "ViewState": {},
-                          "Toolbar": {
-                            "showChartToolbar": true,
-                            "showDrawMenu": true,
-                            "showViewMenu": false,
-                            "showIndicators": true
+                            "ComponentName": "panel",
+                            "RelativeHeight": true,
+                            "Advanced": false,
+                            "UserLayout": false,
+                            "Floatable": false,
+                            "ColCount": 36,
+                            "RowCount": 24
                           },
                           "Style": {
                             "advanced": "",
-                            "cssClasses": "",
-                            "chartDisplayAreaHorizontalGridLinesColor": "#d8d8d8",
-                            "chartDisplayAreaVerticalGridLinesColor": "#d8d8d8",
-                            "crosshairColor": "#555555",
-                            "chartDisplayAreaBackground": "#ffffff",
-                            "chartDisplayAreaAlternativeBackground": "#ffffff",
-                            "chartBorderColor": "#000000",
-                            "axisTextMajor": "#000000",
-                            "axisTextMinor": "#646464",
-                            "selectedBackground": "#555555",
-                            "selectedForeground": "#ffffff",
-                            "chartDisplayAreaCandleStickUpFill": "#009933",
-                            "chartDisplayAreaCandleStickDownFill": "#d00d00"
+                            "cssClasses": ""
                           },
                           "Alignment": {
                             "paddingLeft": 0,
@@ -513,9 +559,7 @@
                           "format": {
                             "titleFontSize": 16,
                             "titleHorizontal": "Center",
-                            "titleFontBold": false,
                             "titleShadow": false,
-                            "titleTransparentBackground": false,
                             "tileBorderWidth": 0,
                             "tileBorderRounding": 0,
                             "tileBorderColor": "#000000",
@@ -526,8 +570,427 @@
                         },
                         "containerId": null,
                         "components": [],
-                        "widgets": [],
-                        "definitionId": "4",
+                        "widgets": [
+                          {
+                            "id": "d6a1dca5-f407-d9d2-8336-0051cb9c6f4a",
+                            "layout": {
+                              "row": 0,
+                              "column": 7,
+                              "rowSpan": 2,
+                              "colSpan": 5
+                            },
+                            "component": {
+                              "id": "b0d20f0c-32d3-e836-7f7d-74f81be2885b",
+                              "key": "BasicComponents",
+                              "options": {
+                                "version": "4.5.0",
+                                "Basics": {
+                                  "ComponentName": "label",
+                                  "HtmlText": {
+                                    "_dashboardsType": "viewstate",
+                                    "value": "dailyHDBBySym/syms"
+                                  },
+                                  "Data": "",
+                                  "Template": "",
+                                  "Theme": "Dark",
+                                  "FontSize": "13",
+                                  "horizontal": "Center",
+                                  "vertical": "Middle",
+                                  "tooltip": "",
+                                  "AllowUnsafeContent": false,
+                                  "version": "4.2.0s2"
+                                },
+                                "Style": {
+                                  "advanced": "",
+                                  "cssClasses": ""
+                                },
+                                "Alignment": {
+                                  "paddingLeft": 0,
+                                  "paddingRight": 0,
+                                  "paddingTop": 0,
+                                  "paddingBottom": 0,
+                                  "innerPaddingLeft": 0,
+                                  "innerPaddingRight": 0,
+                                  "innerPaddingTop": 0,
+                                  "innerPaddingBottom": 0,
+                                  "titlePaddingLeft": 0,
+                                  "titlePaddingRight": 0,
+                                  "titlePaddingTop": 7,
+                                  "titlePaddingBottom": 7
+                                },
+                                "format": {
+                                  "titleFontSize": 16,
+                                  "titleHorizontal": "Left",
+                                  "titleFontBold": false,
+                                  "titleShadow": false,
+                                  "titleTransparentBackground": false,
+                                  "tileBorderWidth": 0,
+                                  "tileBorderRounding": 0,
+                                  "tileBorderColor": "#000000",
+                                  "tileBackgroundColor": "#000000",
+                                  "tileTransparentBackground": true,
+                                  "tileShadow": true
+                                }
+                              },
+                              "containerId": null,
+                              "components": [],
+                              "widgets": [],
+                              "definitionId": "17",
+                              "hasOnSettingsChange": true
+                            }
+                          },
+                          {
+                            "id": "e659cab5-39bd-b0b7-f04d-0e3fa737ff15",
+                            "layout": {
+                              "row": 0,
+                              "column": 0,
+                              "rowSpan": 2,
+                              "colSpan": 7
+                            },
+                            "component": {
+                              "id": "2620ccdf-ba82-1ace-7594-5e47c1eb6c4d",
+                              "key": "BasicComponents",
+                              "options": {
+                                "version": "4.5.0",
+                                "Basics": {
+                                  "ComponentName": "label",
+                                  "HtmlText": "Chart is showing",
+                                  "Data": "",
+                                  "Template": "",
+                                  "Theme": "Dark",
+                                  "FontSize": "13",
+                                  "horizontal": "Center",
+                                  "vertical": "Middle",
+                                  "tooltip": "",
+                                  "AllowUnsafeContent": false,
+                                  "version": "4.2.0s2"
+                                },
+                                "Style": {
+                                  "advanced": "",
+                                  "cssClasses": ""
+                                },
+                                "Alignment": {
+                                  "paddingLeft": 0,
+                                  "paddingRight": 0,
+                                  "paddingTop": 0,
+                                  "paddingBottom": 0,
+                                  "innerPaddingLeft": 0,
+                                  "innerPaddingRight": 0,
+                                  "innerPaddingTop": 0,
+                                  "innerPaddingBottom": 0,
+                                  "titlePaddingLeft": 0,
+                                  "titlePaddingRight": 0,
+                                  "titlePaddingTop": 7,
+                                  "titlePaddingBottom": 7
+                                },
+                                "format": {
+                                  "titleFontSize": 16,
+                                  "titleHorizontal": "Center",
+                                  "titleFontBold": false,
+                                  "titleShadow": false,
+                                  "titleTransparentBackground": false,
+                                  "tileBorderWidth": 0,
+                                  "tileBorderRounding": 0,
+                                  "tileBorderColor": "#000000",
+                                  "tileBackgroundColor": "#000000",
+                                  "tileTransparentBackground": true,
+                                  "tileShadow": true
+                                }
+                              },
+                              "containerId": null,
+                              "components": [],
+                              "widgets": [],
+                              "definitionId": "17",
+                              "hasOnSettingsChange": true
+                            }
+                          },
+                          {
+                            "id": "1b210679-8ee6-396e-23e1-90117cfb9a4e",
+                            "layout": {
+                              "row": 2,
+                              "column": 0,
+                              "rowSpan": 22,
+                              "colSpan": 36
+                            },
+                            "component": {
+                              "id": "1eb822cc-7b18-7c10-9ffd-e90c95627da9",
+                              "key": "ChartJS",
+                              "options": {
+                                "Overlay": {
+                                  "customTooltip": "<table style='{{fontSize}}'><thead><tr style='padding-right: 10px;'> <th>{{ xLabel }} </th><th> </th > </tr></thead ><tbody> {{#each points }}<tr><td>{{{svg}}} {{ layerName }}: </td><td style='padding-right: 10px; text-align: left;'>{{layerData}}</td > </tr>{{/each}}</tbody></table>"
+                                },
+                                "Legend": {
+                                  "LabelColor": "#000000"
+                                },
+                                "Layers": [
+                                  {
+                                    "_Hidden": {
+                                      "_Type": "Line",
+                                      "_Index": 0,
+                                      "_LayerId": "layer_9769",
+                                      "_PossibleColumns": [
+                                        "Open",
+                                        "High",
+                                        "Low",
+                                        "Close",
+                                        "Volume",
+                                        "Date"
+                                      ],
+                                      "_PossibleRadius": [
+                                        "Fixed Size",
+                                        "Open",
+                                        "High",
+                                        "Low",
+                                        "Close",
+                                        "Volume",
+                                        "Date"
+                                      ],
+                                      "_PossibleXAxes": [
+                                        "XAxis 1"
+                                      ],
+                                      "_PossibleYAxes": [
+                                        "YAxis 1",
+                                        "YAxis 2"
+                                      ],
+                                      "_PossibleColumnsWithXYKey": [
+                                        "<thisX>",
+                                        "<thisY>",
+                                        "<thisName>",
+                                        "Open",
+                                        "High",
+                                        "Low",
+                                        "Close",
+                                        "Volume",
+                                        "Date"
+                                      ],
+                                      "_PossibleColumnsWithItself": [
+                                        "<this>",
+                                        "Open",
+                                        "High",
+                                        "Low",
+                                        "Close",
+                                        "Volume",
+                                        "Date"
+                                      ],
+                                      "_PossibleLayers": [
+                                        "nofill",
+                                        "Layer 2",
+                                        "origin"
+                                      ]
+                                    },
+                                    "Basics": {
+                                      "Name": "Adjusted Close Price",
+                                      "Data": {
+                                        "_dashboardsType": "data",
+                                        "value": "dailyHDBBySym"
+                                      }
+                                    },
+                                    "Axes": {
+                                      "XAxisData": "Date",
+                                      "YAxisData": "Close",
+                                      "XAxisID": "XAxis 1",
+                                      "YAxisID": "YAxis 1"
+                                    },
+                                    "Labels": {
+                                      "Font": {
+                                        "Bold": false,
+                                        "Size": 12
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "_Hidden": {
+                                      "_Type": "Bar",
+                                      "_Index": 1,
+                                      "_LayerId": "layer_10094",
+                                      "_PossibleColumns": [
+                                        "Open",
+                                        "High",
+                                        "Low",
+                                        "Close",
+                                        "Volume",
+                                        "Date"
+                                      ],
+                                      "_PossibleRadius": [
+                                        "Fixed Size",
+                                        "Open",
+                                        "High",
+                                        "Low",
+                                        "Close",
+                                        "Volume",
+                                        "Date"
+                                      ],
+                                      "_PossibleXAxes": [
+                                        "XAxis 1"
+                                      ],
+                                      "_PossibleYAxes": [
+                                        "YAxis 1",
+                                        "YAxis 2"
+                                      ],
+                                      "_PossibleColumnsWithXYKey": [
+                                        "<thisX>",
+                                        "<thisY>",
+                                        "<thisName>",
+                                        "Open",
+                                        "High",
+                                        "Low",
+                                        "Close",
+                                        "Volume",
+                                        "Date"
+                                      ],
+                                      "_PossibleColumnsWithItself": [
+                                        "<this>",
+                                        "Open",
+                                        "High",
+                                        "Low",
+                                        "Close",
+                                        "Volume",
+                                        "Date"
+                                      ]
+                                    },
+                                    "Basics": {
+                                      "Name": "Volume",
+                                      "BackgroundColor": "#41f21d",
+                                      "BorderColor": "#04570b",
+                                      "Data": {
+                                        "_dashboardsType": "data",
+                                        "value": "dailyHDBBySym"
+                                      }
+                                    },
+                                    "Axes": {
+                                      "XAxisData": "Date",
+                                      "YAxisData": "Volume",
+                                      "XAxisID": "XAxis 1",
+                                      "YAxisID": "YAxis 2"
+                                    },
+                                    "Labels": {
+                                      "Font": {
+                                        "Bold": false,
+                                        "Size": 12
+                                      }
+                                    },
+                                    "Bars": {
+                                      "HoverBackgroundColor": "#0ced23",
+                                      "HoverBorderColor": "#3afa19"
+                                    }
+                                  }
+                                ],
+                                "XAxes": [
+                                  {
+                                    "_Hidden": {
+                                      "_Index": 0,
+                                      "_Label": "XAxis 1",
+                                      "_AxisId": "axis_9745",
+                                      "_Type": "time"
+                                    },
+                                    "GridLines": {
+                                      "GridLinesColor": "#000000"
+                                    },
+                                    "Labels": {
+                                      "MaxWidth": 0,
+                                      "_ReverseCache": false,
+                                      "FontColor": "#000000",
+                                      "TimeFormats": {
+                                        "Distribution": "linear",
+                                        "TriggerBreak": 86400000,
+                                        "Break": 86400000,
+                                        "Unit": "",
+                                        "Year": "YYYY",
+                                        "Quarter": "[Q]Q - YYYY",
+                                        "Month": "MMM YYYY",
+                                        "Week": "ll",
+                                        "Day": "MMM D",
+                                        "Hour": "hA",
+                                        "Minute": "h:mm a",
+                                        "Second": "h:mm:ss a",
+                                        "Millisecond": "h:mm:ss.SSS a",
+                                        "TooltipFormat": "",
+                                        "IsoWeekday": false,
+                                        "Round": false
+                                      }
+                                    },
+                                    "Range": {
+                                      "SoftRange": false,
+                                      "UseDataRange": false,
+                                      "SuggestedMax": 0,
+                                      "SuggestedMin": 0,
+                                      "Max": 0,
+                                      "Min": 0
+                                    }
+                                  }
+                                ],
+                                "YAxes": [
+                                  {
+                                    "_Hidden": {
+                                      "_Index": 0,
+                                      "_Label": "YAxis 1",
+                                      "_AxisId": "axis_9749",
+                                      "_Type": "linear"
+                                    },
+                                    "GridLines": {
+                                      "GridLinesColor": "#000000"
+                                    },
+                                    "Labels": {
+                                      "MaxWidth": 0,
+                                      "_ReverseCache": false,
+                                      "FontColor": "#000000",
+                                      "DateFormat": "YYYY-MM-DD"
+                                    },
+                                    "Range": {
+                                      "SoftRange": false,
+                                      "UseDataRange": false,
+                                      "SuggestedMax": 0,
+                                      "SuggestedMin": 0,
+                                      "Max": 0,
+                                      "Min": 0
+                                    }
+                                  },
+                                  {
+                                    "_Hidden": {
+                                      "_Index": 1,
+                                      "_Label": "YAxis 2",
+                                      "_AxisId": "axis_10102",
+                                      "_Type": "linear"
+                                    },
+                                    "Position": "right",
+                                    "GridLines": {
+                                      "GridLinesColor": "#000000"
+                                    },
+                                    "Labels": {
+                                      "MaxWidth": 0,
+                                      "_ReverseCache": false,
+                                      "FontColor": "#000000",
+                                      "DateFormat": "YYYY-MM-DD"
+                                    },
+                                    "Range": {
+                                      "SoftRange": false,
+                                      "UseDataRange": false,
+                                      "SuggestedMax": 0,
+                                      "SuggestedMin": 0,
+                                      "Max": 0,
+                                      "Min": 0
+                                    }
+                                  }
+                                ],
+                                "format": {
+                                  "titleFontBold": false,
+                                  "titleTransparentBackground": false
+                                },
+                                "version": "4.3.1",
+                                "Zoom": {
+                                  "Min": "2020-06-09",
+                                  "Max": "2020-10-30"
+                                }
+                              },
+                              "containerId": null,
+                              "components": [],
+                              "widgets": [],
+                              "definitionId": "1007",
+                              "hasOnSettingsChange": true
+                            }
+                          }
+                        ],
+                        "definitionId": "50",
                         "hasOnSettingsChange": true
                       }
                     },
@@ -570,7 +1033,9 @@
                           "format": {
                             "titleFontSize": 16,
                             "titleHorizontal": "Center",
+                            "titleFontBold": false,
                             "titleShadow": false,
+                            "titleTransparentBackground": false,
                             "tileBorderWidth": 0,
                             "tileBorderRounding": 0,
                             "tileBorderColor": "#000000",
@@ -583,7 +1048,7 @@
                         "components": [],
                         "widgets": [
                           {
-                            "id": "fcfa1885-09e7-e36b-7986-b8f5ce68eb10",
+                            "id": "1ed502e1-d99c-1f90-db50-c33afd8a57dd",
                             "layout": {
                               "row": null,
                               "column": null,
@@ -591,12 +1056,12 @@
                               "colSpan": 6
                             },
                             "component": {
-                              "id": "e6b44af0-b433-b9a1-95e1-8ba095f29115",
+                              "id": "1d9149d7-a2a7-5ea2-f4e7-e581074b45e1",
                               "key": "BasicComponents",
                               "options": {
-                                "version": "4.0.0d2",
+                                "version": "4.5.0",
                                 "ViewState": {
-                                  "Url": "https://bing.com"
+                                  "Url": "http://bing.com"
                                 },
                                 "Basics": {
                                   "ComponentName": "webComponent"
@@ -622,7 +1087,9 @@
                                 "format": {
                                   "titleFontSize": 16,
                                   "titleHorizontal": "Center",
+                                  "titleFontBold": false,
                                   "titleShadow": false,
+                                  "titleTransparentBackground": false,
                                   "tileBorderWidth": 0,
                                   "tileBorderRounding": 0,
                                   "tileBorderColor": "#000000",
@@ -658,7 +1125,8 @@
       "relativeHeight": true,
       "rowCount": 24,
       "colCount": 36,
-      "floatable": false
+      "floatable": false,
+      "isDefault": true
     }
   ],
   "popups": [],
@@ -694,10 +1162,6 @@
         "version": 0,
         "GroupingConfiguration": []
       },
-      "c0a60948-c0f7-fcf9-3f10-3a445924c2c8": {
-        "version": 0,
-        "granularity": "OneDay"
-      },
       "b3ae1932-6ef3-d362-9aae-5d31bc87fb69": {
         "version": 0,
         "GroupingConfiguration": []
@@ -712,8 +1176,20 @@
         "_viewType": true,
         "_type": "symbol",
         "_default": "IBM",
-        "value": "IBM"
+        "value": "NVDA"
+      },
+      "industry": {
+        "_viewType": true,
+        "_default": "Technology",
+        "value": "Technology",
+        "_type": "symbol"
       }
+    },
+    "url": {
+      "_viewType": true,
+      "_type": "string",
+      "value": "https://twitter.com/search/?q=AAPL",
+      "_default": "https://twitter.com/search/?q=AAPL"
     }
   },
   "data": {
@@ -768,6 +1244,66 @@
           "type": "symbol",
           "required": false,
           "value": "<%dailyHDBBySym/syms%>",
+          "isViewState": true
+        }
+      ],
+      "_subscriptionKey": "",
+      "_isStreamingSubscription": false,
+      "_hasUpdateQuery": false,
+      "_updateQueryString": "",
+      "_updateType": "query",
+      "_pageSize": 2000,
+      "_serverPaging": false
+    },
+    "pullSymByIndustry": {
+      "_autoExec": true,
+      "_columns": [
+        "sym",
+        "marketCap",
+        "beta",
+        "logo_url"
+      ],
+      "_dataType": "analytic",
+      "_dataSource": "kdb",
+      "_connection": "dailyHDB",
+      "_mappings": {
+        "key": "sym",
+        "mappings": {},
+        "value": "marketCap"
+      },
+      "_maxRows": 2000,
+      "_subscriptionType": "static",
+      "_subscriptionInterval": 3,
+      "_layout": [
+        {
+          "isExpanded": true,
+          "weight": 2
+        },
+        {
+          "isExpanded": false,
+          "weight": 1
+        },
+        {
+          "isExpanded": false,
+          "weight": 1
+        },
+        {
+          "isExpanded": true,
+          "weight": 0
+        },
+        {
+          "isExpanded": false,
+          "weight": 2
+        }
+      ],
+      "_selectedAnalytic": ".hdb.pullSymByIndusty",
+      "_analyticParams": [
+        {
+          "id": "ind",
+          "name": "ind",
+          "type": "symbol",
+          "required": false,
+          "value": "<%dailyHDBBySym/industry%>",
           "isViewState": true
         }
       ],
