@@ -90,10 +90,23 @@ queryBySym:{[syms]
 	wClause:enlist (in;`sym;syms);
 	ids: value ?[symIDDirectory;wClause;();enlist[`int]!enlist[`id]];
 	wClause:enlist[(in;`int;ids)],wClause;
-	aClause:`Open`High`Low`Close`Volume`Date!`open`high`low`adjustedClose`volume`date;
+	aClause:`Open`High`Low`Close`Volume`Date`splitCoefficient!`open`high`low`adjustedClose`volume`date`splitCoefficient;
 	//TO-DO include arbitary limits
-	:?[`dailyFinancialData;wClause;0b;aClause]
+	tab:?[`dailyFinancialData;wClause;0b;aClause];
+	:updateSplitCoefficient[tab]
  };
+
+updateSplitCoefficient:{[tab]
+	if[not `splitCoefficient in cols tab;'"splitCoefficient is missing, unable to apply split logic"];
+	//assume if enters into this function, to split on default data
+	if[not all `Open`High`Low`Close`Volume in cols tab;'"Missing default columns, unable to apply split logic"];
+	res:update  splitCoefficient:reverse (*\) reverse splitCoefficient from tab;
+	idx: 1 _ exec i from (select (-':) splitCoefficient from res) where splitCoefficient <> 0;
+	res: update splitCoefficient:0nf from res where i in idx-1;
+	res: update reverse fills reverse splitCoefficient from res;
+	res:update Open % splitCoefficient, High % splitCoefficient, Low % splitCoefficient, Close % splitCoefficient, Volume * splitCoefficient from res;
+	enlist[`splitCoefficient] _ res
+ };	
 
 pullSymByIndusty:{[ind]
  	5#select from `marketCap xdesc select sym,marketCap, beta, logo_url from symMetaLinkage where sector = ind
