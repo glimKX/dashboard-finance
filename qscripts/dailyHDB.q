@@ -90,10 +90,15 @@ queryBySym:{[syms]
 	wClause:enlist (in;`sym;syms);
 	ids: value ?[symIDDirectory;wClause;();enlist[`int]!enlist[`id]];
 	wClause:enlist[(in;`int;ids)],wClause;
-	aClause:`Open`High`Low`Close`Volume`Date`splitCoefficient!`open`high`low`adjustedClose`volume`date`splitCoefficient;
+	aClause:`Open`High`Low`Close`Volume`Date`splitCoefficient!`open`high`low`close`volume`date`splitCoefficient;
 	//TO-DO include arbitary limits
 	tab:?[`dailyFinancialData;wClause;0b;aClause];
 	:updateSplitCoefficient[tab]
+ };
+
+//Might not be able to use this
+queryBySymViewState:{[sym] data:exec 2 * max Volume, 1.1 * max Close, 0.9 * min Close from .hdb.queryBySym[sym];
+    :(`$"dailyHDBBySym/volMax";`$"dailyHDBBySym/priceMax";`$"dailyHDBBySym/priceMin")!value data
  };
 
 updateSplitCoefficient:{[tab]
