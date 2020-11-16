@@ -138,9 +138,25 @@ queryForBS:{[syms]
 	queryForMetrics[tab;syms;col]
  };
 
+queryForCF:{[syms]
+    col:`year`cashGeneratedByOperating`netCashProvidedByInvestingActivities`netCashProvidedByFinancingActivities;
+    tab:`finnhubCFReport;
+    queryForMetrics[tab;syms;col]
+ };
+
+queryForIC:{[syms]
+    col:`year`grossProfit`netIncome`operatingExpenses`rndExpense`earningPerShareBasic`weightedAvgNumberOfSharesOutstandingBasic;
+    tab:`finnhubICReport;
+    queryForMetrics[tab;syms;col]
+ };
+
 queryForTop5SymMetrics:{[ind]
 	syms:exec 5#sym from `marketCap xdesc select sym,marketCap from symMetaLinkage where sector = ind;
-	tab:queryForBS[syms];
+	tabBS:queryForBS[syms];
+	tabCF:queryForCF[syms];
+	tabIC:queryForIC[syms];
+	tab:`sym xkey {[tab;tab2] ![0;tab] lj `sym`year xkey tab2}/[tabBS;(tabCF;tabIC)];
+
 	//pivot for easier comparison
 	(flip enlist[`metrics]!enlist 1 _ cols tab)!flip value[key[tab]`sym]!flip value flip value[tab]
  };

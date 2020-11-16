@@ -2,7 +2,7 @@
   "id": "9c2143e2-bb70-fda3-ae8f-51f2a81fe720",
   "name": "FinDash - Tech",
   "creationDate": "Tue, 23 Jun 2020 12:59:35 GMT",
-  "lastUpdateDate": "Thu, 05 Nov 2020 13:39:54 GMT",
+  "lastUpdateDate": "Mon, 16 Nov 2020 13:50:40 GMT",
   "thumb": null,
   "screenDetails": [
     {
@@ -417,13 +417,30 @@
                         "options": {
                           "version": "4.5.0a",
                           "datagridPossibleColumnsWithItself": [
-                            "<this>"
+                            "<this>",
+                            "metrics",
+                            "AAPL",
+                            "ADBE",
+                            "INTC",
+                            "MSFT",
+                            "NVDA"
                           ],
                           "selectedColumnPossibleValues": [
-                            ""
+                            "metrics",
+                            "AAPL",
+                            "ADBE",
+                            "INTC",
+                            "MSFT",
+                            "NVDA"
                           ],
                           "sortingPossibleValues": [
-                            ""
+                            "",
+                            "metrics",
+                            "AAPL",
+                            "ADBE",
+                            "INTC",
+                            "MSFT",
+                            "NVDA"
                           ],
                           "Style": {
                             "EvenRowBackgroundColorOverride": "#ffffff",
@@ -442,13 +459,97 @@
                             "titlePaddingRight": 0
                           },
                           "format": {
+                            "titleFontBold": false,
+                            "titleTransparentBackground": false,
                             "tileBorderWidth": 0,
                             "tileBorderRounding": 0,
                             "tileBorderColor": "#000000",
                             "tileBackgroundColor": "#000000",
                             "tileTransparentBackground": true,
                             "tileShadow": true
-                          }
+                          },
+                          "datagridPossibleColumns": [
+                            "metrics",
+                            "AAPL",
+                            "ADBE",
+                            "INTC",
+                            "MSFT",
+                            "NVDA"
+                          ],
+                          "highlightTargetPossibleValues": [
+                            "metrics",
+                            "AAPL",
+                            "ADBE",
+                            "INTC",
+                            "MSFT",
+                            "NVDA",
+                            "*"
+                          ],
+                          "Basics": {
+                            "Data": {
+                              "_dashboardsType": "data",
+                              "value": "pullMetricByIndustry"
+                            },
+                            "Filtering": "disabled",
+                            "IsFilterVisible": false,
+                            "ShowPagingControl": false,
+                            "EnableGrouping": false
+                          },
+                          "ColumnsConfiguration": [
+                            {
+                              "Field": "metrics",
+                              "DisplayName": "metrics",
+                              "WidthWeight": 100,
+                              "MinWidthAbsolute": 100,
+                              "IsReadonly": true,
+                              "TextAlign": "left"
+                            },
+                            {
+                              "Field": "*",
+                              "DisplayName": "*",
+                              "Sortable": false,
+                              "Format": "Smart Number",
+                              "WidthWeight": 30,
+                              "Template": "{{#gt (toInt thisRawValue) 999}}\n    {{#lt (toInt thisRawValue) 9999}}\n        <b>{{thisRawValue}}</b>\n        {{else}}\n            {{thisValue}}\n    {{/lt}}\n    {{else}}\n        {{thisValue}}\n{{/gt}}"
+                            }
+                          ],
+                          "Selection": {
+                            "RowSelectionColumn": "metrics"
+                          },
+                          "FileExport": {
+                            "ShowExportCsvButton": false
+                          },
+                          "HighlightRules": [
+                            {
+                              "Name": "",
+                              "Enabled": true,
+                              "Target": "*",
+                              "ConditionSource": "<this>",
+                              "ConditionOperator": "",
+                              "ConditionValue": "previous value",
+                              "Color": "",
+                              "BackgroundColor": "",
+                              "BorderColor": "",
+                              "Icon": "",
+                              "IconColor": "",
+                              "RuleType": "discrete",
+                              "RuleMin": 0,
+                              "RuleMax": 1,
+                              "RuleLimitEnabled": false,
+                              "TargetElement": "background",
+                              "Palette": [
+                                {
+                                  "color": "#b71c1c"
+                                },
+                                {
+                                  "color": "#F57F17"
+                                },
+                                {
+                                  "color": "#33691E"
+                                }
+                              ]
+                            }
+                          ]
                         },
                         "containerId": null,
                         "components": [],
@@ -730,6 +831,7 @@
                                 "Layers": [
                                   {
                                     "_Hidden": {
+                                      "_Type": "Candlestick",
                                       "_Index": 0,
                                       "_LayerId": "layer_9769",
                                       "_PossibleColumns": [
@@ -775,21 +877,20 @@
                                         "Close",
                                         "Volume",
                                         "Date"
-                                      ],
-                                      "_Type": "Candlestick"
+                                      ]
                                     },
                                     "Basics": {
+                                      "Name": "Price",
+                                      "BackgroundColor": "#fcfcfc",
+                                      "BorderColor": "#040508",
                                       "Data": {
                                         "_dashboardsType": "data",
                                         "value": "dailyHDBBySym"
-                                      },
-                                      "Name": "Price",
-                                      "BackgroundColor": "#fcfcfc",
-                                      "BorderColor": "#040508"
+                                      }
                                     },
                                     "Axes": {
-                                      "XAxisID": "XAxis 1",
                                       "XAxisData": "Date",
+                                      "XAxisID": "XAxis 1",
                                       "YAxisID": "YAxis 1",
                                       "Open": "Open",
                                       "Close": "Close",
@@ -803,9 +904,9 @@
                                       }
                                     },
                                     "Candlestick": {
-                                      "BearColor": "#ff0000",
-                                      "BullColor": "#4dff00",
-                                      "NeutralColor": "#080308"
+                                      "BearColor": "#ff0011",
+                                      "BullColor": "#0dff00",
+                                      "NeutralColor": "#030203"
                                     }
                                   },
                                   {
@@ -887,6 +988,7 @@
                                   },
                                   {
                                     "_Hidden": {
+                                      "_Type": "Line",
                                       "_Index": 2,
                                       "_LayerId": "layer_1928",
                                       "_PossibleColumns": [
@@ -917,7 +1019,6 @@
                                         "Property",
                                         "Value"
                                       ],
-                                      "_Type": "Line",
                                       "_PossibleLayers": [
                                         "Layer 1",
                                         "Layer 2",
@@ -926,22 +1027,22 @@
                                       ]
                                     },
                                     "Basics": {
-                                      "Data": {
-                                        "_dashboardsType": "data",
-                                        "value": "dailyHDBBySymMax"
-                                      },
                                       "Name": "ViewStateMapper",
                                       "Enabled": false,
                                       "LegendEnabled": false,
                                       "BackgroundColor": "#808387",
                                       "BackgroundOpacity": 40,
-                                      "BorderColor": "#808387"
+                                      "BorderColor": "#808387",
+                                      "Data": {
+                                        "_dashboardsType": "data",
+                                        "value": "dailyHDBBySymMax"
+                                      }
                                     },
                                     "Axes": {
-                                      "XAxisID": "XAxis 1",
                                       "XAxisData": "Date",
-                                      "YAxisID": "YAxis 2",
-                                      "YAxisData": "Volume"
+                                      "YAxisData": "Volume",
+                                      "XAxisID": "XAxis 1",
+                                      "YAxisID": "YAxis 2"
                                     },
                                     "Labels": {
                                       "Font": {
@@ -957,10 +1058,10 @@
                                 "XAxes": [
                                   {
                                     "_Hidden": {
+                                      "_Type": "time",
                                       "_Index": 0,
                                       "_Label": "XAxis 1",
-                                      "_AxisId": "axis_9745",
-                                      "_Type": "time"
+                                      "_AxisId": "axis_9745"
                                     },
                                     "Bars": {
                                       "BarPercentage": 100,
@@ -972,9 +1073,9 @@
                                       "GridLinesColor": "#000000"
                                     },
                                     "Labels": {
+                                      "FontColor": "#000000",
                                       "MaxWidth": 0,
                                       "_ReverseCache": false,
-                                      "FontColor": "#000000",
                                       "TimeFormats": {
                                         "Distribution": "series",
                                         "TriggerBreak": 86400000,
@@ -997,6 +1098,8 @@
                                     "Range": {
                                       "SoftRange": false,
                                       "UseDataRange": false,
+                                      "SuggestedMax": 0,
+                                      "SuggestedMin": 0,
                                       "Max": 0,
                                       "Min": 0
                                     }
@@ -1005,27 +1108,29 @@
                                 "YAxes": [
                                   {
                                     "_Hidden": {
+                                      "_Type": "linear",
                                       "_Index": 0,
                                       "_Label": "YAxis 1",
-                                      "_AxisId": "axis_9749",
-                                      "_Type": "linear"
+                                      "_AxisId": "axis_9749"
                                     },
                                     "GridLines": {
                                       "OffsetGridLines": false,
                                       "GridLinesColor": "#000000"
                                     },
                                     "Labels": {
-                                      "MaxWidth": 0,
-                                      "_ReverseCache": false,
                                       "FontColor": "#050205",
                                       "Format": "Smart Number",
                                       "Precision": 0,
+                                      "MaxWidth": 0,
+                                      "_ReverseCache": false,
                                       "DateFormat": "YYYY-MM-DD"
                                     },
                                     "Range": {
                                       "UseMinMax": true,
                                       "SoftRange": false,
                                       "UseDataRange": false,
+                                      "SuggestedMax": 0,
+                                      "SuggestedMin": 0,
                                       "Max": {
                                         "_dashboardsType": "viewstate",
                                         "value": "dailyHDBBySym/priceMaxRange"
@@ -1038,12 +1143,11 @@
                                   },
                                   {
                                     "_Hidden": {
+                                      "_Type": "linear",
                                       "_Index": 1,
                                       "_Label": "YAxis 2",
-                                      "_AxisId": "axis_10102",
-                                      "_Type": "linear"
+                                      "_AxisId": "axis_10102"
                                     },
-                                    "Position": "right",
                                     "Bars": {
                                       "BarPercentage": 100,
                                       "CategoryPercentage": 20
@@ -1053,35 +1157,34 @@
                                       "GridLinesColor": "#000000"
                                     },
                                     "Labels": {
-                                      "MaxWidth": 0,
-                                      "_ReverseCache": false,
                                       "FontColor": "#000000",
                                       "Format": "Smart Number",
                                       "Precision": 0,
                                       "HideTrailingZeroes": true,
+                                      "MaxWidth": 0,
+                                      "_ReverseCache": false,
                                       "DateFormat": "YYYY-MM-DD"
                                     },
                                     "Range": {
                                       "UseMinMax": true,
                                       "SoftRange": false,
                                       "UseDataRange": false,
+                                      "SuggestedMax": 0,
+                                      "SuggestedMin": 0,
                                       "Max": {
                                         "_dashboardsType": "viewstate",
                                         "value": "dailyHDBBySym/volMaxRange"
                                       },
                                       "Min": 0
-                                    }
+                                    },
+                                    "Position": "right"
                                   }
                                 ],
                                 "format": {
                                   "titleFontBold": false,
                                   "titleTransparentBackground": false
                                 },
-                                "version": "4.3.1",
-                                "Zoom": {
-                                  "Min": "2020-10-05",
-                                  "Max": "2020-10-26"
-                                }
+                                "version": "4.3.1"
                               },
                               "containerId": null,
                               "components": [],
@@ -1276,8 +1379,8 @@
       "syms": {
         "_viewType": true,
         "_type": "symbol",
-        "_default": "IBM",
-        "value": "AAPL"
+        "_default": "AAPL",
+        "value": "ADBE"
       },
       "industry": {
         "_viewType": true,
@@ -1288,19 +1391,19 @@
       "volMaxRange": {
         "_viewType": true,
         "_type": "int",
-        "value": 748590936,
+        "value": 16944840,
         "_default": 0
       },
       "priceMaxRange": {
         "_viewType": true,
         "_type": "float",
-        "value": 147.598,
+        "value": 587.18,
         "_default": 0
       },
       "priceMinRange": {
         "_viewType": true,
         "_type": "float",
-        "value": 75.5775,
+        "value": 348.903,
         "_default": ""
       }
     },
@@ -1313,10 +1416,15 @@
   },
   "data": {
     "dailyHDBBySym": {
+      "_pagingType": "NONE",
       "_autoExec": true,
       "_columns": [
-        "Property",
-        "Value"
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Volume",
+        "Date"
       ],
       "_dataType": "analytic",
       "_dataSource": "kdb",
@@ -1437,6 +1545,7 @@
       "_serverPaging": false
     },
     "dailyHDBBySymMax": {
+      "_pagingType": "NONE",
       "_autoExec": true,
       "_columns": [
         "Property",
@@ -1505,6 +1614,57 @@
       "_updateType": "query",
       "_pageSize": 2000,
       "_serverPaging": false
+    },
+    "pullMetricByIndustry": {
+      "_autoExec": true,
+      "_columns": [],
+      "_dataType": "analytic",
+      "_dataSource": "kdb",
+      "_connection": "dailyHDB",
+      "_mappings": {},
+      "_maxRows": 2000,
+      "_subscriptionType": "static",
+      "_subscriptionInterval": 3,
+      "_layout": [
+        {
+          "isExpanded": true,
+          "weight": 2
+        },
+        {
+          "isExpanded": false,
+          "weight": 1
+        },
+        {
+          "isExpanded": false,
+          "weight": 1
+        },
+        {
+          "isExpanded": true,
+          "weight": 1
+        },
+        {
+          "isExpanded": false,
+          "weight": 2
+        }
+      ],
+      "_selectedAnalytic": ".hdb.queryForTop5SymMetrics",
+      "_analyticParams": [
+        {
+          "id": "ind",
+          "name": "ind",
+          "type": "symbol",
+          "required": false,
+          "value": "<%dailyHDBBySym/industry%>",
+          "isViewState": true
+        }
+      ],
+      "_subscriptionKey": "",
+      "_isStreamingSubscription": false,
+      "_hasUpdateQuery": false,
+      "_updateQueryString": "",
+      "_updateType": "query",
+      "_pageSize": 2000,
+      "_serverPaging": false
     }
   },
   "worksheetPadding": 10,
@@ -1538,6 +1698,6 @@
   "advancedCss": "",
   "cssClasses": "",
   "viewStateBinding": false,
-  "wasChanged": false,
+  "wasChanged": true,
   "version": "4.4.0p7"
 }
