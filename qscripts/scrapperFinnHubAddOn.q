@@ -26,8 +26,8 @@ if[enlist[`dailyFinancialData] ~ key ` sv hsym[`$getenv `HDB_DAILY_DIR],`0;
 		sv[`;(hsym `0;report;`)] set .Q.en[`:.;value x]
 	} each schemaNames;
 	system "d .";
-	.Q.chk[`:.];
 	system "l ",getenv `HDB_DAILY_DIR;
+	.Q.chk[`:.];
 	system "d .scrapper";
 	.log.out "Re-loaded New FinnHub HDB";
  ];
