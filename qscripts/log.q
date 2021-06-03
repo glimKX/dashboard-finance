@@ -19,6 +19,7 @@
 //need unique name for each log file
 .log.AllProcessName:{x:"=" vs' x;(!) . reverse flip @'[@'[@'[x;1;"J"$];0;-5_];0;"S"$]} system "grep -v \"#\" ", getenv[`CONFIG_DIR],"/port.config | awk '{print $2}'";
 .log.processName:.log.AllProcessName system"p";
+.log.getNewHandle:{hopen `$":",getenv[`LOG_DIR],"/",string[.log.processName],string[.z.D],".log"};
 .log.file:hopen `$":",getenv[`LOG_DIR],"/",string[.log.processName],string[.z.D],".log";
 
 .log.string:{string[.log.processName]," ## ",string[.z.P]," ## ",x," \n"};
@@ -34,6 +35,17 @@
 .log.co:{[w] "Connection opened: ",.Q.s1 exec from .log.connections where handle = w}; 
 
 .log.value:{@[{.log.out "User: ",string[.z.u]," ## Running: ",.Q.s1 x;value x};x;{.log.err -1_.Q.s x;x}]};
+
+/roll-over function
+/note that you have to add activate this as an EOD function using cron
+/.cron.addJob[`.log.rollOver;1;::;`datetime$.z.d+1;0wz;1b];
+
+.log.rollOver:{
+	.log.out "Rolling over to new file, closing handle: ",.Q.s .log.file;
+	hclose .log.file;
+	.log.file:.log.getNewHandle[];
+	.log.out "Rolled over to new log file"
+	};
 
 /adding logging message in evaluating ipc
 .z.pg:{.log.value x};

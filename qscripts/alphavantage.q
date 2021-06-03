@@ -30,10 +30,9 @@ buildAndRunQuery:{[args]
 	//TODO - Add options args here
 	optArgs:`function`symbol _ 1 _ args;
 	//Convoluted ifs, no validation of 1 letter options but that would type error
-	optArgs:$[1 = count optArgs;
-	    "&","=" sv raze (string key[optArgs];value[optArgs]);
-	    1 < count optArgs;
-        	"&","&" sv "=" sv' (string key[optArgs];value[optArgs]);
+	optArgs:$[
+	    1 <= count optArgs;
+        	"&","&" sv "=" sv' flip(string key[optArgs];value[optArgs]);
         	""
     	];
 	args:args[`function`symbol],apiKey;
