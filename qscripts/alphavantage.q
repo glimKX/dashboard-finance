@@ -42,6 +42,10 @@ buildAndRunQuery:{[args]
 		query;
 		{.log.err "Failed to run query --- ",x," due to ",y;'"Query Error"}[query]
 	];
+	if[query like "*datatype=csv*";
+                .log.out "Incoming data will be csv format, skipping json parser";
+		:res
+        ];
 	:.j.k res
  };
 
