@@ -33,3 +33,4 @@ Start QProcess.sh will then source for the secretkey file if availableo
 
 ## Credits
 ranaroussi for yfinance which provided a quick solution to stock to industry linkage in python
+
