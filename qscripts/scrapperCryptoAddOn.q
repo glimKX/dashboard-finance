@@ -37,12 +37,11 @@ getCryptoSym:{[x]
 	baseDict:select from symIDDirectory where sym in symsToScrape[`sym], -[.z.P;0] > lastUpdated;
 	symsToScrape: select from symsToScrape where not sym in key[symIDDirectory]`sym;
 	//hardcoded number for ID
-	baseDict upsert flip `id`sym!(count[symsToScrape]?20;symsToScrape[`sym]);
+	baseDict upsert flip `id`sym`information!(count[symsToScrape]?20;symsToScrape[`sym];count[symsToScrape]#enlist "Crypto data downloaded from alphanvantage");
 	:(symsToScrape;baseDict)
  };
 
 
-//NOT DONE
 //Function to build query for Crypto Data
 runCryptoScrape:{[dict]
 	.log.out "Running runCryptoScrape for --- ",.Q.s1 dict;
@@ -52,24 +51,23 @@ runCryptoScrape:{[dict]
 		args[`outputsize]:`full
 	];
 	res:.alphavantage.buildAndRunQuery[args];
-	
+	:stampCryptoData[res;args]
  };
 
-//NOT DONE
-stampCryptoData[data;args]
+stampCryptoData:{[data;args]
 	.log.out "Running stampCryptoData";
 	data:("PFFFFJ";enlist",") 0: data;
 	//create mdata schema to be compliant with .scrapper.symIDDirectory
-        mdata:update `$sym, "P"$max data[`timestamp] from mdata;
-        data:update sym:count[i]#args[`sym] from data;
-        :(mdata;data)
+        data:update sym:count[i]#args[`symbol] from data;
+        :data
  };
 
 //NOT DONE
 //Function to integrate data into current HDB structure
-.scrapper.writeCrypto:{[idDict;dataDict]
+writeCrypto:{[idDict;dataDict]
 	//save dataDict to id hdb
 	.debug.var:`idDict`dataDict!(idDict;dataDict);
+	dataWithID: dataDict lj `sym xkey select sym,id from idDict;
 	existingData:enlist [`int] _ select from cryptoData where int = idDict[`id];
 	existingData:delete from existingData where sym in distinct dataDict[1]`sym, timestamp in dataDict[1]`timestamp;
 	toWriteDown:existingData uj dataDict[1];
@@ -80,12 +78,20 @@ stampCryptoData[data;args]
 	`.scrapper.symIDDirectory upsert idDict;
  };
 
+writeCryptoByID:{[id;dataWithID]
+	//we will each on the id
+	existingData:enlist [`int] _ select from cryptoData where int = id;
+	existingData 	
+ };
+
 //NOT DONE
 //Main Crypto Scrapper Function
 cryptoMain:{[]
  	.log.out "Begin Crypto Scrapper function";
 	allSyms:getCryptoSym[3];
-	runReportedFinancialScrape each allSyms;
+	data:raze runCryptoScrape each allSyms[0];
+	intDict:allSyms[1] lj select lastUpdated:"z"$max[timestamp] by sym from data;
+	writeCrypto[intDict;data]
 	.log.out "End of Reported Financial Scrapper Function";
  };
 
