@@ -16,13 +16,15 @@
 cryptoSchema:flip `timestamp`sym`open`high`low`close`volume!"PSFFFFJ"$\:();
 
 .log.out "Perform check if this is initial init of cryptoSchema";
+latestPartition:`$string max "J"$string except[key hsym[`$getenv `HDB_DAILY_DIR];`sym];
 
-if[enlist[`cryptoData] ~ key ` sv hsym[`$getenv `HDB_DAILY_DIR],`0;
-	.log.out "New cryptoData HDB, initialising first partition";
-	sv[`;(hsym `0;`cryptoData;`)] set .Q.en[`:.;cryptoSchema];
+if[not `cryptoData in key ` sv hsym[`$getenv `HDB_DAILY_DIR],latestPartition;
+	.log.out "New cryptoData HDB, initialising into latest partition";
+	sv[`;(hsym latestPartition;`cryptoData;`)] set .Q.en[`:.;cryptoSchema];
 	system "d .";
 	system "l ",getenv `HDB_DAILY_DIR;
 	.Q.chk[`:.];
+	system "l ",getenv `HDB_DAILY_DIR;
 	system "d .scrapper";
 	.log.out "Re-loaded New cryptoData HDB";
  ];
@@ -34,10 +36,10 @@ getCryptoSym:{[x]
 	.log.out "Choosing ",.Q.s[x], " random crypto sym";
 	symsToScrape:distinct x?cryptoConfig;
 	//Remove syms which were updated recently
-	baseDict:select from symIDDirectory where sym in symsToScrape[`sym], -[.z.P;0] > lastUpdated;
-	symsToScrape: select from symsToScrape where not sym in key[symIDDirectory]`sym;
+	baseDict:select from .scrapper.symIDDirectory where sym in symsToScrape[`sym], -[.z.P;0] > lastUpdated;
+	symsToScrape: select from symsToScrape where not sym in key[.scrapper.symIDDirectory]`sym;
 	//hardcoded number for ID
-	baseDict upsert flip `id`sym`information!(count[symsToScrape]?20;symsToScrape[`sym];count[symsToScrape]#enlist "Crypto data downloaded from alphanvantage");
+	baseDict:baseDict upsert flip `id`sym`information!(count[symsToScrape]?20;symsToScrape[`sym];count[symsToScrape]#enlist "Crypto data downloaded from alphanvantage");
 	:(symsToScrape;baseDict)
  };
 
@@ -62,44 +64,43 @@ stampCryptoData:{[data;args]
         :data
  };
 
-//NOT DONE
 //Function to integrate data into current HDB structure
 writeCrypto:{[idDict;dataDict]
 	//save dataDict to id hdb
 	.debug.var:`idDict`dataDict!(idDict;dataDict);
 	dataWithID: dataDict lj `sym xkey select sym,id from idDict;
-	existingData:enlist [`int] _ select from cryptoData where int = idDict[`id];
-	existingData:delete from existingData where sym in distinct dataDict[1]`sym, timestamp in dataDict[1]`timestamp;
-	toWriteDown:existingData uj dataDict[1];
-	toWriteDown:update `p#sym from `sym`timestamp xasc toWriteDown;
-	sv[`;(hsym `$string idDict[`id];`cryptoData;`)] set .Q.en[`:.;toWriteDown];
+	writeCryptoByID[;dataWithID] each distinct ![0;idDict]`id;
 	//update symIDDirectory table
-	idDict:update information: first data Dict[0][`information],lastUpdated:`dateTime$first dataDict[0][`lastUpdated] from idDict;
+	.log.out "Write Crypto Completed, updaing symIDDirectory";
 	`.scrapper.symIDDirectory upsert idDict;
+	`.scrapper.symIDDirLoc set .scrapper.symIDDirectory;	
  };
 
-writeCryptoByID:{[id;dataWithID]
-	//we will each on the id
-	existingData:enlist [`int] _ select from cryptoData where int = id;
-	existingData 	
- };
-
-//NOT DONE
 //Main Crypto Scrapper Function
 cryptoMain:{[]
  	.log.out "Begin Crypto Scrapper function";
 	allSyms:getCryptoSym[3];
 	data:raze runCryptoScrape each allSyms[0];
 	intDict:allSyms[1] lj select lastUpdated:"z"$max[timestamp] by sym from data;
-	writeCrypto[intDict;data]
+	writeCrypto[intDict;data];
+	system "l .";
 	.log.out "End of Reported Financial Scrapper Function";
  };
 
 \d .
 
+//This needs to be in global namespace due to cryptoData
+.scrapper.writeCryptoByID:{[idt;dataWithID]
+        //we will each on the id
+        existingData:enlist [`int] _ select from cryptoData where int = idt;
+        toWriteDown:distinct existingData uj enlist[`id] _ select from dataWithID where id = idt;
+        toWriteDown:update `p#sym from `sym`timestamp xasc toWriteDown;
+        sv[`;(hsym `$getenv `HDB_DAILY_DIR;`$string idt;`cryptoData;`)] set .Q.en[`:.;toWriteDown];
+ };
+
 //Add cryptoMain to the timer
 //`datetime$.z.d+1 to use the next closest EOD time
 .log.out "Adding scrapperCryptoAddOn Timer Functions";
-.cron.addJob[`.scrapper.cryptoMain;1%24*50;::;-0wz;0wz;1b];
+.cron.addJob[`.scrapper.cryptoMain;1%24*5;::;-0wz;0wz;1b];
 
 .log.out "End of Crypto Add-on Init";
