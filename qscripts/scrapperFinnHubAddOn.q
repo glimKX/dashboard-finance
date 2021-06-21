@@ -23,7 +23,7 @@ schemaNames set' value .finnhub.schemaDict
 if[enlist[`dailyFinancialData] ~ key ` sv hsym[`$getenv `HDB_DAILY_DIR],`0;
 	.log.out "New FinnHub HDB, initialising first partition";
 	{ report:`$ssr[string x;"Schema";""];
-		sv[`;(hsym `0;report;`)] set .Q.en[`:.;value x]
+		sv[`;(hsym `20;report;`)] set .Q.en[`:.;value x]
 	} each schemaNames;
 	system "d .";
 	system "l ",getenv `HDB_DAILY_DIR;
@@ -73,6 +73,9 @@ scrapeReportedFinancialMain:{[]
  	.log.out "Begin Reported Financial Scrapper function";
 	allSyms:getReportedFinancialSym[];
 	runReportedFinancialScrape each allSyms;
+	system "l .";
+	.Q.chk[`:.];
+	system "l .";
 	.log.out "End of Reported Financial Scrapper Function";
  };
 

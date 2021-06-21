@@ -50,7 +50,7 @@ $[not () ~ key hsym `$getenv `SYM_ID_DIRECTORY;
 
 if[{lvDown:key x;not `dailyFinancialData in distinct raze key each ` sv' x,'lvDown} hsym `$getenv `HDB_DAILY_DIR;
 	.log.out "New HDB, initialising first partition";
-	sv[`;(hsym `0;`dailyFinancialData;`)] set .Q.en[`:.;dailyFinData];
+	sv[`;(hsym `20;`dailyFinancialData;`)] set .Q.en[`:.;dailyFinData];
 	.Q.chk[`:.];
 	system "d .";
 	system "l ",getenv `HDB_DAILY_DIR;
@@ -97,6 +97,9 @@ scrapeMain:{[]
 	scrapedData:runScrape each 0!symDictsToScrape;
 	writeScrape '[0!symDictsToScrape;scrapedData];
 	symIDDirLoc set .scrapper.symIDDirectory;
+	system "l .";
+	//back fill new partitions created
+	.Q.chk[`:.];
 	system "l .";
 	.log.out "End of Scrapper function";
  };

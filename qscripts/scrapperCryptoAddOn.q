@@ -84,6 +84,9 @@ cryptoMain:{[]
 	intDict:allSyms[1] lj select lastUpdated:"z"$max[timestamp] by sym from data;
 	writeCrypto[intDict;data];
 	system "l .";
+	//Backfill data partitions
+	.Q.chk[`:.];
+	system "l .";
 	.log.out "End of Reported Financial Scrapper Function";
  };
 
