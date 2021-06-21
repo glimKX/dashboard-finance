@@ -63,6 +63,23 @@ if[{lvDown:key x;not `dailyFinancialData in distinct raze key each ` sv' x,'lvDo
 scrapperConfig:`$read0 hsym `$getenv[`CONFIG_DIR],"/scrapper.config";
 resetScrapperConfig:{scrapperConfig:`$read0 hsym `$getenv[`CONFIG_DIR],"/scrapper.config"};
 
+//TODO
+//Creation of HDB Refresh Table
+hdbConnections:flip `dateTime`processName`connection`handle!"ZSSJ"$/:();
+//Function called from HDB process after connection with scrapper unit
+hdbConnection:{[dict]
+	//dict to have processName (must be unique)
+ };
+//Function triggers when a handle is dropped to update hdbConnections Table
+hdbConnectionDropped:{[w]
+ };
+//If handle is present, to send neg h to connected HDB to reload
+hdbSendReload:{[]
+	//Using hdbConnections, we will send neg h command across hdbs to reload
+ };
+
+//END OF TODO
+
 //Note the lack of recovery mechanism
 
 //Start of Scrapper
@@ -123,12 +140,13 @@ scrapeMain:{[]
  };
 
 .log.out "Declaring timer functions";
-.cron.addJob[`.scrapper.scrapeMain;1%60*24;::;-0wz;0wz;1b];
+.cron.addJob[`.scrapper.scrapeMain;1%60*24%3;::;-0wz;0wz;1b];
 .cron.addJob[`.log.rollOver;1;::;`datetime$.z.d+1;0wz;1b];
 
 //Add on script 
 system "l ",getenv[`QSCRIPTS_DIR],"/scrapperEmbedPyAddOn.q";
 system "l ",getenv[`QSCRIPTS_DIR],"/scrapperFinnHubAddOn.q";
+system "l ",getenv[`QSCRIPTS_DIR],"/scrapperCryptoAddOn.q";
 
 .log.out "End of Init";
 
