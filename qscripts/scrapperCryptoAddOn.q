@@ -36,8 +36,8 @@ getCryptoSym:{[x]
 	.log.out "Choosing ",.Q.s[x], " random crypto sym";
 	symsToScrape:distinct x?cryptoConfig;
 	//Remove syms which were updated recently
-	baseDict:select from .scrapper.symIDDirectory where sym in symsToScrape[`sym], -[.z.P;0] > lastUpdated;
-	symsToScrape: select from symsToScrape where not sym in key[.scrapper.symIDDirectory]`sym;
+	baseDict:select from .scrapper.symIDDirectory where sym in symsToScrape[`sym], -[.z.P;0] < lastUpdated;
+	symsToScrape: select from symsToScrape where not sym in baseDict`sym;
 	//hardcoded number for ID
 	baseDict:baseDict upsert flip `id`sym`information!(count[symsToScrape]?20;symsToScrape[`sym];count[symsToScrape]#enlist "Crypto data downloaded from alphanvantage");
 	:(symsToScrape;baseDict)
