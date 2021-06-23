@@ -76,6 +76,7 @@ scrapeReportedFinancialMain:{[]
 	system "l .";
 	.Q.chk[`:.];
 	system "l .";
+	hdbSendReload[];
 	.log.out "End of Reported Financial Scrapper Function";
  };
 

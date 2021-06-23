@@ -18,6 +18,18 @@ system "l ",getenv `HDB_DAILY_DIR;
 
 \d .hdb
 
+//connection to scrapper unit
+connReqToScrappers:![value .log.AllProcessName;key .log.AllProcessName] value[.log.AllProcessName] where value[.log.AllProcessName] like "*SCRAPPER*";
+
+connToScrapper:{[h]
+	.log.out "Opening Connection to ",.Q.s h;
+	scrapper:hopen h;
+	.log.out "Connected to Scrapper ",.Q.s scrapper;
+	neg[scrapper](`.scrapper.hdbConnection;.log.processName);
+ };
+
+connToScrapper each connReqToScrappers;
+
 //symIDDir schema
 symIDDirectorySchema:`sym xkey flip `id`information`sym`lastUpdated!"J*SZ"$\:();
 

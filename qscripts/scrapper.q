@@ -63,22 +63,26 @@ if[{lvDown:key x;not `dailyFinancialData in distinct raze key each ` sv' x,'lvDo
 scrapperConfig:`$read0 hsym `$getenv[`CONFIG_DIR],"/scrapper.config";
 resetScrapperConfig:{scrapperConfig:`$read0 hsym `$getenv[`CONFIG_DIR],"/scrapper.config"};
 
-//TODO
-//Creation of HDB Refresh Table
+//HDB Async Refresh Logic 
 hdbConnections:flip `dateTime`processName`connection`handle!"ZSSJ"$/:();
 //Function called from HDB process after connection with scrapper unit
-hdbConnection:{[dict]
-	//dict to have processName (must be unique)
+hdbConnection:{[name]
+	`.scrapper.hdbConnections upsert (.z.Z;name;`open;.z.w);
+	.log.out "Connection opened: ",.Q.s1 exec from .scrapper.hdbConnections where handle = .z.w;
  };
-//Function triggers when a handle is dropped to update hdbConnections Table
+//Function triggers when a handle is dropped to update hdbConnections Table, needs to be included in .z.pc
 hdbConnectionDropped:{[w]
+	if[null (exec from hdbConnections where handle = w)[`connection];:()];
+	update connection:`closed from `.scrapper.hdbConnections where handle = w;
+	.log.out "Connection closed: ",.Q.s1 exec from .scrapper.hdbConnections where handle = w;
  };
 //If handle is present, to send neg h to connected HDB to reload
 hdbSendReload:{[]
 	//Using hdbConnections, we will send neg h command across hdbs to reload
+	.log.out "Sending reload to all connected HDBs";
+	h:exec handle from hdbConnections where connection = `open;
+	-25!(h;(`.hdb.reloadDB;`));
  };
-
-//END OF TODO
 
 //Note the lack of recovery mechanism
 
@@ -118,6 +122,7 @@ scrapeMain:{[]
 	//back fill new partitions created
 	.Q.chk[`:.];
 	system "l .";
+	hdbSendReload[];
 	.log.out "End of Scrapper function";
  };
 
@@ -138,6 +143,10 @@ scrapeMain:{[]
         `.scrapper.symIDDirectory upsert idDict;
 
  };
+
+//Redefining .z.pc, note that there are other logic running in .z.pc already
+.scrapper.pc:.z.pc;
+.z.pc:{[w] .scrapper.pc[w]; .scrapper.hdbConnectionDropped[w]};
 
 .log.out "Declaring timer functions";
 .cron.addJob[`.scrapper.scrapeMain;1%60*24%3;::;-0wz;0wz;1b];

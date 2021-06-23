@@ -73,7 +73,7 @@ writeCrypto:{[idDict;dataDict]
 	//update symIDDirectory table
 	.log.out "Write Crypto Completed, updaing symIDDirectory";
 	`.scrapper.symIDDirectory upsert idDict;
-	`.scrapper.symIDDirLoc set .scrapper.symIDDirectory;	
+	symIDDirLoc set .scrapper.symIDDirectory;	
  };
 
 //Main Crypto Scrapper Function
@@ -87,6 +87,7 @@ cryptoMain:{[]
 	//Backfill data partitions
 	.Q.chk[`:.];
 	system "l .";
+	hdbSendReload[];
 	.log.out "End of Reported Financial Scrapper Function";
  };
 

@@ -64,6 +64,7 @@ updateSymMeta:{
 	data:update beta:0nf from data where -9 <> type each data[`beta];
 	`.scrapper.symMetaLinkage upsert `sym xkey `sym xcol data;
 	symMetaLinkageLoc set symMetaLinkage;
+	hdbSendReload[];
 	.log.out "Sym Meta Linkage Updated"
  };
 
