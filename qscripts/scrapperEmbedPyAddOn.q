@@ -46,6 +46,7 @@ pullDataFromYFinance:{[syms]
 	dict:@[data;`:info;{.log.err ".scrapper.pullDataFromYFinance failed with ",string[x]," due to ",.Q.s y;:()}[syms]];
 	if[() ~ dict;:`symbol`sector`industry`longBusinessSummary`beta`currency`marketCap`logo_url!(syms;`;`;" ";0nf;`;0nf;" ")];
 	dict:data[`:info][`];
+	//FIXED REQUIRED to prevent writedown from bad SYMs - TODO
 	//hardcoded list of data to keep
 	data:`symbol`sector`industry`longBusinessSummary`beta`currency`marketCap`logo_url#dict;
 	//random null causing issues - using dict amend as we have more nulls than expected

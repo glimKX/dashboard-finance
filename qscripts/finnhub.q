@@ -92,7 +92,7 @@ mapData:{[data;symbol;yr;reportType]
 	mappingConfigToUse:mappingConfigDict[reportType];
 	colsToIngest:mappingConfigToUse[`finnHubConceptName] inter data[`concept];
 	dataToIngest:exec colsToIngest#concept!value1 from data;
-	if[not count dataToIngest;.log.out "In .finnhub.mapData --- Data is empty, skipping ingestion";:schemaDict[reportType]];
+		if[not count dataToIngest;.log.out "In .finnhub.mapData --- Data is empty, skipping ingestion";:schemaDict[reportType]];
 	typeMappingForData:exec colsToIngest#finnHubConceptName!typ from mappingConfigToUse;
 	colNameMappingForData:value exec colsToIngest#finnHubConceptName!colName from mappingConfigToUse;
 	data:enlist colNameMappingForData!(typeMapping raze value typeMappingForData)$'value dataToIngest;
