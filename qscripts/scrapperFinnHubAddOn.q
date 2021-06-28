@@ -19,8 +19,9 @@ schemaNames:`$ssr[;"Mapping";"ReportSchema"] each string key .finnhub.schemaDict
 schemaNames set' value .finnhub.schemaDict
 
 .log.out "Perform check if this is initial init of finnhub tables";
+latestPartition:`$string max "J"$string except[key hsym[`$getenv `HDB_DAILY_DIR];`sym];
 
-if[enlist[`dailyFinancialData] ~ key ` sv hsym[`$getenv `HDB_DAILY_DIR],`0;
+if[any not `finnhubBSReport`finnhubCFReport`finnhubICReport in\: key ` sv hsym[`$getenv `HDB_DAILY_DIR],latestPartition;
 	.log.out "New FinnHub HDB, initialising first partition";
 	{ report:`$ssr[string x;"Schema";""];
 		sv[`;(hsym `20;report;`)] set .Q.en[`:.;value x]
