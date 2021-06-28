@@ -179,11 +179,11 @@ queryForTop5SymMetrics:{[ind]
 reloadDB:{
 	.log.out "Re-loading HDB";
 	system "l .";
-	if[not () ~ key symIDDirLoc;
-		symIDDirectory:get symIDDirLoc;
+	if[not () ~ key .hdb.symIDDirLoc;
+		.hdb.symIDDirectory:get .hdb.symIDDirLoc;
 	];
-	if[not () ~ key symMetaLinkageLoc;
-		symMetaLinkage:get symMetaLinkageLoc
+	if[not () ~ key .hdb.symMetaLinkageLoc;
+		.hdb.symMetaLinkage:get .hdb.symMetaLinkageLoc
 	];
 	.log.out "HDB Re-loaded";
  };

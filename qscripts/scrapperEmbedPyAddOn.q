@@ -48,8 +48,9 @@ pullDataFromYFinance:{[syms]
 	dict:data[`:info][`];
 	//hardcoded list of data to keep
 	data:`symbol`sector`industry`longBusinessSummary`beta`currency`marketCap`logo_url#dict;
-	//random null causing issues
-	if[(::) ~ data`beta;data[`beta]:0nf];
+	//random null causing issues - using dict amend as we have more nulls than expected
+	//if[(::) ~ data`beta;data[`beta]:0nf];
+	data:@[data;key[data] where data[key data] ~' (::);:;0nf];
         data:@[data;`symbol`sector`industry`currency`longBusinessSummary where -9h = type each data[`symbol`sector`industry`currency`longBusinessSummary];string];
 	:update `$symbol, `$sector,`$industry, `$currency, `float$marketCap from data
  };
@@ -63,7 +64,7 @@ updateSymMeta:{
 	//due to some ticker having weird beta, exception clause here to fix it
 	data:update beta:0nf from data where -9 <> type each data[`beta];
 	`.scrapper.symMetaLinkage upsert `sym xkey `sym xcol data;
-	symMetaLinkageLoc set symMetaLinkage;
+	.scrapper.symMetaLinkageLoc set .scrapper.symMetaLinkage;
 	hdbSendReload[];
 	.log.out "Sym Meta Linkage Updated"
  };
