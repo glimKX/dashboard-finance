@@ -2,7 +2,7 @@
   "id": "9c2143e2-bb70-fda3-ae8f-51f2a81fe720",
   "name": "FinDash - Tech",
   "creationDate": "Tue, 23 Jun 2020 12:59:35 GMT",
-  "lastUpdateDate": "Mon, 16 Nov 2020 13:50:40 GMT",
+  "lastUpdateDate": "Mon, 12 Jul 2021 13:23:15 GMT",
   "thumb": null,
   "screenDetails": [
     {
@@ -28,7 +28,7 @@
             "id": "0c4eaf43-7a61-6b80-4ff7-dacd6087fb0c",
             "key": "Accordion",
             "options": {
-              "version": "4.0.0S13",
+              "version": "4.5.1",
               "Basics": {
                 "ComponentName": "accordion",
                 "Direction": "Horizontal",
@@ -40,7 +40,8 @@
                     "Expanded": true,
                     "Weight": 200,
                     "Resizeable": false,
-                    "HideTitle": true
+                    "HideTitle": true,
+                    "Flex": false
                   },
                   {
                     "SectionId": "section_7472",
@@ -49,9 +50,11 @@
                     "Expanded": true,
                     "Weight": 250,
                     "Resizeable": false,
-                    "HideTitle": false
+                    "HideTitle": false,
+                    "Flex": false
                   }
-                ]
+                ],
+                "ScaleOnResize": false
               },
               "Style": {
                 "advanced": "",
@@ -101,7 +104,7 @@
                   "id": "08a903c6-8839-6c4d-c7fc-bfa8ede2ee7a",
                   "key": "FlexPanel",
                   "options": {
-                    "version": "4.3.0",
+                    "version": 0,
                     "Basics": {
                       "layout": "horizontaltop",
                       "maxSize": 0,
@@ -421,7 +424,7 @@
                             "metrics",
                             "AAPL",
                             "ADBE",
-                            "INTC",
+                            "CSCO",
                             "MSFT",
                             "NVDA"
                           ],
@@ -429,7 +432,7 @@
                             "metrics",
                             "AAPL",
                             "ADBE",
-                            "INTC",
+                            "CSCO",
                             "MSFT",
                             "NVDA"
                           ],
@@ -438,7 +441,7 @@
                             "metrics",
                             "AAPL",
                             "ADBE",
-                            "INTC",
+                            "CSCO",
                             "MSFT",
                             "NVDA"
                           ],
@@ -472,7 +475,7 @@
                             "metrics",
                             "AAPL",
                             "ADBE",
-                            "INTC",
+                            "CSCO",
                             "MSFT",
                             "NVDA"
                           ],
@@ -480,7 +483,7 @@
                             "metrics",
                             "AAPL",
                             "ADBE",
-                            "INTC",
+                            "CSCO",
                             "MSFT",
                             "NVDA",
                             "*"
@@ -576,11 +579,11 @@
                   "id": "f4ddc12d-dd29-c39c-242b-180986d81ae0",
                   "key": "FlexPanel",
                   "options": {
-                    "version": "4.3.0",
+                    "version": 0,
                     "Basics": {
                       "layout": "horizontaltop",
                       "maxSize": 0,
-                      "minSize": 350
+                      "minSize": 410
                     },
                     "Style": {
                       "advanced": "",
@@ -806,35 +809,44 @@
                             }
                           },
                           {
-                            "id": "1b210679-8ee6-396e-23e1-90117cfb9a4e",
+                            "id": "f1316650-0f67-2efa-e079-13b51286fbd7",
                             "layout": {
                               "row": 2,
                               "column": 0,
-                              "rowSpan": 22,
-                              "colSpan": 36
+                              "rowSpan": 13,
+                              "colSpan": 35
                             },
                             "component": {
-                              "id": "1eb822cc-7b18-7c10-9ffd-e90c95627da9",
+                              "id": "ee361195-6d44-3a9b-2529-5bfbcd453baf",
                               "key": "ChartJS",
                               "options": {
-                                "Overlay": {
-                                  "customTooltip": "<table style='{{fontSize}}'><thead><tr style='padding-right: 10px;'> <th>{{ xLabel }} </th><th> </th > </tr></thead ><tbody> {{#each points }}<tr><td>{{{svg}}} {{ layerName }}: </td><td style='padding-right: 10px; text-align: left;'>{{layerData}}</td > </tr>{{/each}}</tbody></table>",
-                                  "TooltipsIntersect": true
-                                },
-                                "Legend": {
-                                  "LabelColor": "#000000",
-                                  "layerState": {
-                                    "layer_9769": true,
-                                    "layer_10094": true
-                                  }
-                                },
                                 "Layers": [
                                   {
                                     "_Hidden": {
                                       "_Type": "Candlestick",
                                       "_Index": 0,
-                                      "_LayerId": "layer_9769",
+                                      "_LayerId": "layer_8977",
                                       "_PossibleColumns": [
+                                        "Open",
+                                        "High",
+                                        "Low",
+                                        "Close",
+                                        "Volume",
+                                        "Date"
+                                      ],
+                                      "_PossibleColumnsWithItself": [
+                                        "<this>",
+                                        "Open",
+                                        "High",
+                                        "Low",
+                                        "Close",
+                                        "Volume",
+                                        "Date"
+                                      ],
+                                      "_PossibleColumnsWithXYKey": [
+                                        "<thisX>",
+                                        "<thisY>",
+                                        "<thisName>",
                                         "Open",
                                         "High",
                                         "Low",
@@ -855,34 +867,13 @@
                                         "XAxis 1"
                                       ],
                                       "_PossibleYAxes": [
-                                        "YAxis 1",
-                                        "YAxis 2"
-                                      ],
-                                      "_PossibleColumnsWithXYKey": [
-                                        "<thisX>",
-                                        "<thisY>",
-                                        "<thisName>",
-                                        "Open",
-                                        "High",
-                                        "Low",
-                                        "Close",
-                                        "Volume",
-                                        "Date"
-                                      ],
-                                      "_PossibleColumnsWithItself": [
-                                        "<this>",
-                                        "Open",
-                                        "High",
-                                        "Low",
-                                        "Close",
-                                        "Volume",
-                                        "Date"
+                                        "YAxis 1"
                                       ]
                                     },
                                     "Basics": {
-                                      "Name": "Price",
-                                      "BackgroundColor": "#fcfcfc",
-                                      "BorderColor": "#040508",
+                                      "LegendLabelColor": "",
+                                      "Name": "OHLC",
+                                      "BorderWidth": 0,
                                       "Data": {
                                         "_dashboardsType": "data",
                                         "value": "dailyHDBBySym"
@@ -892,29 +883,134 @@
                                       "XAxisData": "Date",
                                       "XAxisID": "XAxis 1",
                                       "YAxisID": "YAxis 1",
-                                      "Open": "Open",
                                       "Close": "Close",
+                                      "High": "High",
                                       "Low": "Low",
-                                      "High": "High"
+                                      "Open": "Open"
                                     },
                                     "Labels": {
+                                      "Color": "#000000",
                                       "Font": {
                                         "Bold": false,
                                         "Size": 12
                                       }
                                     },
                                     "Candlestick": {
-                                      "BearColor": "#ff0011",
-                                      "BullColor": "#0dff00",
-                                      "NeutralColor": "#030203"
+                                      "CategoryPercentage": 82,
+                                      "MaxBarThickness": 16
                                     }
-                                  },
+                                  }
+                                ],
+                                "Legend": {
+                                  "LabelColor": "#000000",
+                                  "Display": false
+                                },
+                                "XAxes": [
+                                  {
+                                    "_Hidden": {
+                                      "_Type": "category",
+                                      "_AxisId": "axis_17423",
+                                      "_Index": 0,
+                                      "_Label": "XAxis 1"
+                                    },
+                                    "GridLines": {
+                                      "OffsetGridLines": false,
+                                      "GridLinesColor": "#000000",
+                                      "GridLinesOpacity": 0
+                                    },
+                                    "Labels": {
+                                      "FontColor": "#000000",
+                                      "Format": "Datetime",
+                                      "MaxWidth": 0,
+                                      "_ReverseCache": false,
+                                      "BeginAtZero": true,
+                                      "DateFormat": "YYYY-MM-DD"
+                                    }
+                                  }
+                                ],
+                                "YAxes": [
+                                  {
+                                    "_Hidden": {
+                                      "_Type": "linear",
+                                      "_AxisId": "axis_17427",
+                                      "_Index": 0,
+                                      "_Label": "YAxis 1"
+                                    },
+                                    "GridLines": {
+                                      "OffsetGridLines": false,
+                                      "GridLinesColor": "#000000",
+                                      "GridLinesOpacity": 0
+                                    },
+                                    "Labels": {
+                                      "FontColor": "#050005",
+                                      "FontFamily": "'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'",
+                                      "Format": "Smart Number",
+                                      "Precision": 1,
+                                      "MaxWidth": 0,
+                                      "_ReverseCache": false,
+                                      "DateFormat": "YYYY-MM-DD"
+                                    },
+                                    "Range": {
+                                      "UseMinMax": true,
+                                      "UseDataRange": true
+                                    },
+                                    "Position": "right"
+                                  }
+                                ],
+                                "Zoom": {
+                                  "ZoomToIndex": false,
+                                  "DragPan": false,
+                                  "DragZoom": false,
+                                  "ScrollZoom": false
+                                },
+                                "version": "4.6.1"
+                              },
+                              "containerId": null,
+                              "components": [],
+                              "widgets": [],
+                              "definitionId": "1007",
+                              "hasOnSettingsChange": true
+                            }
+                          },
+                          {
+                            "id": "7568148c-5482-a836-2a35-3cb9b2ddaba8",
+                            "layout": {
+                              "row": 15,
+                              "column": 0,
+                              "rowSpan": 9,
+                              "colSpan": 35
+                            },
+                            "component": {
+                              "id": "49bda26a-f619-d34d-10c1-ebd564254a24",
+                              "key": "ChartJS",
+                              "options": {
+                                "Layers": [
                                   {
                                     "_Hidden": {
                                       "_Type": "Bar",
-                                      "_Index": 1,
-                                      "_LayerId": "layer_10094",
+                                      "_Index": 0,
+                                      "_LayerId": "layer_8977",
                                       "_PossibleColumns": [
+                                        "Open",
+                                        "High",
+                                        "Low",
+                                        "Close",
+                                        "Volume",
+                                        "Date"
+                                      ],
+                                      "_PossibleColumnsWithItself": [
+                                        "<this>",
+                                        "Open",
+                                        "High",
+                                        "Low",
+                                        "Close",
+                                        "Volume",
+                                        "Date"
+                                      ],
+                                      "_PossibleColumnsWithXYKey": [
+                                        "<thisX>",
+                                        "<thisY>",
+                                        "<thisName>",
                                         "Open",
                                         "High",
                                         "Low",
@@ -935,35 +1031,13 @@
                                         "XAxis 1"
                                       ],
                                       "_PossibleYAxes": [
-                                        "YAxis 1",
-                                        "YAxis 2"
-                                      ],
-                                      "_PossibleColumnsWithXYKey": [
-                                        "<thisX>",
-                                        "<thisY>",
-                                        "<thisName>",
-                                        "Open",
-                                        "High",
-                                        "Low",
-                                        "Close",
-                                        "Volume",
-                                        "Date"
-                                      ],
-                                      "_PossibleColumnsWithItself": [
-                                        "<this>",
-                                        "Open",
-                                        "High",
-                                        "Low",
-                                        "Close",
-                                        "Volume",
-                                        "Date"
+                                        "YAxis 1"
                                       ]
                                     },
                                     "Basics": {
+                                      "LegendLabelColor": "",
                                       "Name": "Volume",
-                                      "BackgroundColor": "#095c14",
-                                      "BackgroundOpacity": 40,
-                                      "BorderColor": "#04570b",
+                                      "BorderWidth": 0,
                                       "Data": {
                                         "_dashboardsType": "data",
                                         "value": "dailyHDBBySym"
@@ -973,135 +1047,40 @@
                                       "XAxisData": "Date",
                                       "YAxisData": "Volume",
                                       "XAxisID": "XAxis 1",
-                                      "YAxisID": "YAxis 2"
+                                      "YAxisID": "YAxis 1"
                                     },
                                     "Labels": {
                                       "Font": {
                                         "Bold": false,
                                         "Size": 12
                                       }
-                                    },
-                                    "Bars": {
-                                      "HoverBackgroundColor": "#0ced23",
-                                      "HoverBorderColor": "#3afa19"
-                                    }
-                                  },
-                                  {
-                                    "_Hidden": {
-                                      "_Type": "Line",
-                                      "_Index": 2,
-                                      "_LayerId": "layer_1928",
-                                      "_PossibleColumns": [
-                                        "Property",
-                                        "Value"
-                                      ],
-                                      "_PossibleRadius": [
-                                        "Fixed Size",
-                                        "Property",
-                                        "Value"
-                                      ],
-                                      "_PossibleXAxes": [
-                                        "XAxis 1"
-                                      ],
-                                      "_PossibleYAxes": [
-                                        "YAxis 1",
-                                        "YAxis 2"
-                                      ],
-                                      "_PossibleColumnsWithXYKey": [
-                                        "<thisX>",
-                                        "<thisY>",
-                                        "<thisName>",
-                                        "Property",
-                                        "Value"
-                                      ],
-                                      "_PossibleColumnsWithItself": [
-                                        "<this>",
-                                        "Property",
-                                        "Value"
-                                      ],
-                                      "_PossibleLayers": [
-                                        "Layer 1",
-                                        "Layer 2",
-                                        "nofill",
-                                        "origin"
-                                      ]
-                                    },
-                                    "Basics": {
-                                      "Name": "ViewStateMapper",
-                                      "Enabled": false,
-                                      "LegendEnabled": false,
-                                      "BackgroundColor": "#808387",
-                                      "BackgroundOpacity": 40,
-                                      "BorderColor": "#808387",
-                                      "Data": {
-                                        "_dashboardsType": "data",
-                                        "value": "dailyHDBBySymMax"
-                                      }
-                                    },
-                                    "Axes": {
-                                      "XAxisData": "Date",
-                                      "YAxisData": "Volume",
-                                      "XAxisID": "XAxis 1",
-                                      "YAxisID": "YAxis 2"
-                                    },
-                                    "Labels": {
-                                      "Font": {
-                                        "Bold": false,
-                                        "Size": 12
-                                      }
-                                    },
-                                    "Line": {
-                                      "ShowLine": false
                                     }
                                   }
                                 ],
+                                "Legend": {
+                                  "LabelColor": "#000000",
+                                  "Display": false
+                                },
                                 "XAxes": [
                                   {
                                     "_Hidden": {
-                                      "_Type": "time",
+                                      "_Type": "category",
+                                      "_AxisId": "axis_18907",
                                       "_Index": 0,
-                                      "_Label": "XAxis 1",
-                                      "_AxisId": "axis_9745"
-                                    },
-                                    "Bars": {
-                                      "BarPercentage": 100,
-                                      "CategoryPercentage": 100,
-                                      "BarThickness": 20
+                                      "_Label": "XAxis 1"
                                     },
                                     "GridLines": {
                                       "OffsetGridLines": false,
-                                      "GridLinesColor": "#000000"
+                                      "GridLinesColor": "#000000",
+                                      "GridLinesOpacity": 0
                                     },
                                     "Labels": {
                                       "FontColor": "#000000",
+                                      "Format": "Datetime",
                                       "MaxWidth": 0,
                                       "_ReverseCache": false,
-                                      "TimeFormats": {
-                                        "Distribution": "series",
-                                        "TriggerBreak": 86400000,
-                                        "Break": 86400000,
-                                        "Unit": "week",
-                                        "Year": "YYYY",
-                                        "Quarter": "[Q]Q - YYYY",
-                                        "Month": "MMM YYYY",
-                                        "Week": "ll",
-                                        "Day": "MMM D",
-                                        "Hour": "hA",
-                                        "Minute": "h:mm a",
-                                        "Second": "h:mm:ss a",
-                                        "Millisecond": "h:mm:ss.SSS a",
-                                        "TooltipFormat": "",
-                                        "IsoWeekday": false,
-                                        "Round": false
-                                      }
-                                    },
-                                    "Range": {
-                                      "SoftRange": false,
-                                      "UseDataRange": false,
-                                      "SuggestedMax": 0,
-                                      "SuggestedMin": 0,
-                                      "Max": 0,
-                                      "Min": 0
+                                      "BeginAtZero": true,
+                                      "DateFormat": "YYYY-MM-DD"
                                     }
                                   }
                                 ],
@@ -1109,82 +1088,29 @@
                                   {
                                     "_Hidden": {
                                       "_Type": "linear",
+                                      "_AxisId": "axis_18911",
                                       "_Index": 0,
-                                      "_Label": "YAxis 1",
-                                      "_AxisId": "axis_9749"
+                                      "_Label": "YAxis 1"
                                     },
                                     "GridLines": {
-                                      "OffsetGridLines": false,
-                                      "GridLinesColor": "#000000"
-                                    },
-                                    "Labels": {
-                                      "FontColor": "#050205",
-                                      "Format": "Smart Number",
-                                      "Precision": 0,
-                                      "MaxWidth": 0,
-                                      "_ReverseCache": false,
-                                      "DateFormat": "YYYY-MM-DD"
-                                    },
-                                    "Range": {
-                                      "UseMinMax": true,
-                                      "SoftRange": false,
-                                      "UseDataRange": false,
-                                      "SuggestedMax": 0,
-                                      "SuggestedMin": 0,
-                                      "Max": {
-                                        "_dashboardsType": "viewstate",
-                                        "value": "dailyHDBBySym/priceMaxRange"
-                                      },
-                                      "Min": {
-                                        "_dashboardsType": "viewstate",
-                                        "value": "dailyHDBBySym/priceMinRange"
-                                      }
-                                    }
-                                  },
-                                  {
-                                    "_Hidden": {
-                                      "_Type": "linear",
-                                      "_Index": 1,
-                                      "_Label": "YAxis 2",
-                                      "_AxisId": "axis_10102"
-                                    },
-                                    "Bars": {
-                                      "BarPercentage": 100,
-                                      "CategoryPercentage": 20
-                                    },
-                                    "GridLines": {
-                                      "OffsetGridLines": false,
                                       "GridLinesColor": "#000000"
                                     },
                                     "Labels": {
                                       "FontColor": "#000000",
                                       "Format": "Smart Number",
-                                      "Precision": 0,
-                                      "HideTrailingZeroes": true,
                                       "MaxWidth": 0,
                                       "_ReverseCache": false,
                                       "DateFormat": "YYYY-MM-DD"
                                     },
-                                    "Range": {
-                                      "UseMinMax": true,
-                                      "SoftRange": false,
-                                      "UseDataRange": false,
-                                      "SuggestedMax": 0,
-                                      "SuggestedMin": 0,
-                                      "Max": {
-                                        "_dashboardsType": "viewstate",
-                                        "value": "dailyHDBBySym/volMaxRange"
-                                      },
-                                      "Min": 0
-                                    },
                                     "Position": "right"
                                   }
                                 ],
-                                "format": {
-                                  "titleFontBold": false,
-                                  "titleTransparentBackground": false
-                                },
-                                "version": "4.3.1"
+                                "version": "4.6.1",
+                                "Zoom": {
+                                  "DragPan": false,
+                                  "DragZoom": false,
+                                  "ScrollZoom": false
+                                }
                               },
                               "containerId": null,
                               "components": [],
@@ -1210,7 +1136,7 @@
                         "id": "c9202034-0964-46fb-80b5-83c2ad931305",
                         "key": "FlexPanel",
                         "options": {
-                          "version": "4.3.0",
+                          "version": 0,
                           "Basics": {
                             "layout": "horizontaltop",
                             "maxSize": 0,
@@ -1265,7 +1191,7 @@
                               "options": {
                                 "version": "4.5.0",
                                 "ViewState": {
-                                  "Url": "http://bing.com"
+                                  "Url": "https://www.google.com/custom?q=&amp;btnG=Search"
                                 },
                                 "Basics": {
                                   "ComponentName": "webComponent"
@@ -1328,6 +1254,7 @@
       ],
       "relativeHeight": true,
       "rowCount": 24,
+      "rowHeight": 25,
       "colCount": 36,
       "floatable": false,
       "isDefault": true
@@ -1340,13 +1267,13 @@
   "saveTimestamp": null,
   "relativeHeight": true,
   "rowCount": 24,
+  "rowHeight": 25,
   "colCount": 36,
   "floatable": false,
   "viewState": {
     "selected": {
       "_viewType": true,
       "_default": "0",
-      "value": "0",
       "_type": "symbol"
     },
     ".settings": {
@@ -1379,38 +1306,32 @@
       "syms": {
         "_viewType": true,
         "_type": "symbol",
-        "_default": "AAPL",
-        "value": "ADBE"
+        "_default": "AAPL"
       },
       "industry": {
         "_viewType": true,
         "_default": "Technology",
-        "value": "Technology",
         "_type": "symbol"
       },
       "volMaxRange": {
         "_viewType": true,
         "_type": "int",
-        "value": 16944840,
         "_default": 0
       },
       "priceMaxRange": {
         "_viewType": true,
         "_type": "float",
-        "value": 587.18,
         "_default": 0
       },
       "priceMinRange": {
         "_viewType": true,
         "_type": "float",
-        "value": 348.903,
         "_default": ""
       }
     },
     "url": {
       "_viewType": true,
       "_type": "string",
-      "value": "https://twitter.com/search/?q=AAPL",
       "_default": "https://twitter.com/search/?q=AAPL"
     }
   },
@@ -1426,7 +1347,7 @@
         "Volume",
         "Date"
       ],
-      "_dataType": "analytic",
+      "_dataType": "query",
       "_dataSource": "kdb",
       "_connection": "dailyHDB",
       "_mappings": {
@@ -1464,20 +1385,20 @@
           "weight": 2
         }
       ],
-      "_selectedAnalytic": ".hdb.queryBySym",
-      "_analyticParams": [
+      "_queryString": "{[syms]\r\n  -100#.hdb.queryBySym[syms]\r\n }",
+      "_queryParams": [
         {
-          "id": "syms",
           "name": "syms",
+          "index": 0,
           "type": "symbol",
-          "required": false,
           "value": "<%dailyHDBBySym/syms%>",
+          "IsKdbParam": true,
           "isViewState": true
         }
       ],
       "_subscriptionKey": "",
-      "_isStreamingSubscription": false,
       "_hasUpdateQuery": false,
+      "_updateQueryParams": [],
       "_updateQueryString": "",
       "_updateType": "query",
       "_pageSize": 2000,
@@ -1616,6 +1537,7 @@
       "_serverPaging": false
     },
     "pullMetricByIndustry": {
+      "_pagingType": "NONE",
       "_autoExec": true,
       "_columns": [],
       "_dataType": "analytic",
@@ -1676,6 +1598,7 @@
   "borderRounding": 0,
   "borderSpacing": 0,
   "borderShadow": true,
+  "saveViewerState": "enabled",
   "enableShareDashboard": false,
   "notifications": {
     "Notifications": {
@@ -1699,5 +1622,5 @@
   "cssClasses": "",
   "viewStateBinding": false,
   "wasChanged": true,
-  "version": "4.4.0p7"
+  "version": "4.6.0P1"
 }

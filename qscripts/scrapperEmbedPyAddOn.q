@@ -64,6 +64,7 @@ updateSymMeta:{
 	.debug.data:data:pullDataFromYFinance each syms;
 	//due to some ticker having weird beta, exception clause here to fix it
 	data:update beta:0nf from data where -9 <> type each data[`beta];
+	data:delete from data where symbol = `;
 	`.scrapper.symMetaLinkage upsert `sym xkey `sym xcol data;
 	.scrapper.symMetaLinkageLoc set .scrapper.symMetaLinkage;
 	hdbSendReload[];

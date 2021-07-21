@@ -149,7 +149,7 @@ scrapeMain:{[]
 .z.pc:{[w] .scrapper.pc[w]; .scrapper.hdbConnectionDropped[w]};
 
 .log.out "Declaring timer functions";
-.cron.addJob[`.scrapper.scrapeMain;1%60*24%3;::;-0wz;0wz;1b];
+.cron.addJob[`.scrapper.scrapeMain;1%60*24%10;::;-0wz;0wz;1b];
 .cron.addJob[`.log.rollOver;1;::;`datetime$.z.d+1;0wz;1b];
 
 //Add on script 

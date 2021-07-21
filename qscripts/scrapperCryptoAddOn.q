@@ -36,10 +36,11 @@ getCryptoSym:{[x]
 	.log.out "Choosing ",.Q.s[x], " random crypto sym";
 	symsToScrape:distinct x?cryptoConfig;
 	//Remove syms which were updated recently
-	baseDict:select from .scrapper.symIDDirectory where sym in symsToScrape[`sym], -[.z.P;0] < lastUpdated;
-	symsToScrape: select from symsToScrape where not sym in baseDict`sym;
+	baseDict:select from .scrapper.symIDDirectory where sym in symsToScrape[`sym], +[lastUpdated;1%60] < .z.Z;
+	symsToScrapeInterim:select from symsToScrape where not sym in key[.scrapper.symIDDirectory]`sym;
 	//hardcoded number for ID
-	baseDict:baseDict upsert flip `id`sym`information!(count[symsToScrape]?20;symsToScrape[`sym];count[symsToScrape]#enlist "Crypto data downloaded from alphanvantage");
+	baseDict:baseDict upsert flip `id`sym`information!(count[symsToScrapeInterim]?20;symsToScrapeInterim[`sym];count[symsToScrapeInterim]#enlist "Crypto data downloaded from alphanvantage");
+	symsToScrape:select from symsToScrape where sym in key[baseDict]`sym;
 	:(symsToScrape;baseDict)
  };
 
@@ -105,6 +106,6 @@ cryptoMain:{[]
 //Add cryptoMain to the timer
 //`datetime$.z.d+1 to use the next closest EOD time
 .log.out "Adding scrapperCryptoAddOn Timer Functions";
-.cron.addJob[`.scrapper.cryptoMain;1%24*5;::;-0wz;0wz;1b];
+.cron.addJob[`.scrapper.cryptoMain;1%60*24%30;::;-0wz;0wz;1b];
 
 .log.out "End of Crypto Add-on Init";
