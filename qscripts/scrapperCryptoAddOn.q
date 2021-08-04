@@ -77,6 +77,16 @@ writeCrypto:{[idDict;dataDict]
 	symIDDirLoc set .scrapper.symIDDirectory;	
  };
 
+//Function to remove duplicate timestamp and select base on larger volume
+//Assumes that volume can only grow and hence data point becomes more accurate because of that
+//WARNING - This is not recommended for a production system
+removeDuplicateSpecial:{[data]
+	//check if data has `volume and `timestamp
+	if[not all `volume`timestamp in cols data;.log.out "In removeDuplicateSpecial --- `volume or `timestamp missing from data, returning data as it is";:data];
+	data:?[data;(enlist(=;`volume;(fby;(enlist;max;`volume);`timestamp)));0b;()];
+	:data
+ }
+
 //Main Crypto Scrapper Function
 cryptoMain:{[]
  	.log.out "Begin Crypto Scrapper function";
@@ -99,6 +109,7 @@ cryptoMain:{[]
         //we will each on the id
         existingData:enlist [`int] _ select from cryptoData where int = idt;
         toWriteDown:distinct existingData uj enlist[`id] _ select from dataWithID where id = idt;
+	toWriteDown:removeDuplicateSpecial toWriteDown;
         toWriteDown:update `p#sym from `sym`timestamp xasc toWriteDown;
         sv[`;(hsym `$getenv `HDB_DAILY_DIR;`$string idt;`cryptoData;`)] set .Q.en[`:.;toWriteDown];
  };
