@@ -20,7 +20,21 @@ apiKey:enlist getenv `TWITTERAPI;
 
 //Start of API
 //tweetSearch - takes dictionary to manipulate query, cleans and sends to query builder
+tweetSearch:{[dict]
+	if[null dict`hashtag;.log.out "In tweetSearch --- Proceeding without hashtag"];
+	if[not[null dict`hashtag] and not dict[`hashtag] like "#*";dict[`hashtag]:"#",except[dict`hashtag;"#"]];
 
+	if[null dict`includeRetweet:.log.out "Retweet boolean mssing, excluding retweets";dict[`includeRetweet]:0b];
+	//check on search operator - ";" = "and", "," = "or"
+	//example string "(happy,exciting,excited,favorite);NWSHouston"
+	//remove "()" if no ","
+	if[not null dict`filter;.log.out "Filter operation present, running checks";
+		interim:";" vs dict`filter;
+		dict[`filter]:" " sv @[interim;where {not ("," in x) and x like "(*)"} each interim;{x except "()"}]
+	];
+	.log.out "TweetSearch Ready --- passing to query builder ",.Q.s1 dict;
+	:dict
+ };
 //Querybuilder - takes cleaned args and construct url 
 
 //QueryRunner - Runs query and parse res
