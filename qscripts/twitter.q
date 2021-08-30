@@ -36,6 +36,22 @@ tweetSearch:{[dict]
 	:dict
  };
 //Querybuilder - takes cleaned args and construct url 
+queryBuilder:{[args]
+	//`hashtag`includeRetweet`filter
+	.log.out "In .tweet.queryBuilder --- ",.Q.s1 args;
+	if[$[`boolean;()] ~ raze null args`filter`hashtag;'"ERROR: Missing hash tag and filter"];
+	$[args[`includeRetweet];args[`includeRetweet]:"";args[`includeRetweet]:"-is:retweet"];
+	args:@[(enlist[(::)]!enlist[" "]),args;where 10h<>type each args;string];
+	//nothing fancy because twitter takes 1 long string
+	query:hookURL,"query=",.h.hu " " sv 1 _ value args;
+	//-H is only available for curl, check how we can pass authorization header or we have to use curl
+	query:query," -H \"Authorization: Bearer ",apiKey,"\"";
+	.log.out "Running tweet query --- ",.Q.s1 query;
+	res:@[.Q.hg;
+                query;
+                {.log.err "Failed to run query --- ",x," due to ",y;'"Query Error"}[query]
+        ];
+ };
 
 //QueryRunner - Runs query and parse res
 
