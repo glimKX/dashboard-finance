@@ -15,28 +15,28 @@ system "l ",getenv[`QSCRIPTS_DIR],"/cron.q";
 \d .tweet
 
 //Globals to enable Twitter Search Queries
-hookURL:enlist getenv `TWITTER_RECENT_URL;
-apiKey:enlist getenv `TWITTERAPI;
+hookURL:getenv `TWITTER_RECENT_URL;
+apiKey:getenv `TWITTERAPI;
 
 //Start of API
 //tweetSearch - takes dictionary to manipulate query, cleans and sends to query builder
 tweetSearch:{[dict]
-	if[null dict`hashtag;.log.out "In tweetSearch --- Proceeding without hashtag"];
-	if[not[null dict`hashtag] and not dict[`hashtag] like "#*";dict[`hashtag]:"#",except[dict`hashtag;"#"]];
+	if[all null dict`hashtag;.log.out "In tweetSearch --- Proceeding without hashtag"];
+	if[not[all null dict`hashtag] and not dict[`hashtag] like "#*";dict[`hashtag]:"#",except[dict`hashtag;"#"]];
 
-	if[null dict`includeRetweet:.log.out "Retweet boolean mssing, excluding retweets";dict[`includeRetweet]:0b];
+	if[all null dict`includeRetweet;.log.out "Retweet boolean mssing, excluding retweets";dict[`includeRetweet]:0b];
 	//check on search operator - ";" = "and", "," = "or"
 	//example string "(happy,exciting,excited,favorite);NWSHouston"
 	//remove "()" if no ","
-	if[not null dict`filter;.log.out "Filter operation present, running checks";
+	if[not all null dict`filter;.log.out "Filter operation present, running checks";
 		interim:";" vs dict`filter;
 		dict[`filter]:" " sv @[interim;where {not ("," in x) and x like "(*)"} each interim;{x except "()"}]
 	];
 	.log.out "TweetSearch Ready --- passing to query builder ",.Q.s1 dict;
-	:dict
+	:queryBuilderAndRun dict
  };
 //Querybuilder - takes cleaned args and construct url 
-queryBuilder:{[args]
+queryBuilderAndRun:{[args]
 	//`hashtag`includeRetweet`filter
 	.log.out "In .tweet.queryBuilder --- ",.Q.s1 args;
 	if[$[`boolean;()] ~ raze null args`filter`hashtag;'"ERROR: Missing hash tag and filter"];
@@ -45,17 +45,23 @@ queryBuilder:{[args]
 	//nothing fancy because twitter takes 1 long string
 	query:hookURL,"query=",.h.hu " " sv 1 _ value args;
 	//-H is only available for curl, check how we can pass authorization header or we have to use curl
-	query:query," -H \"Authorization: Bearer ",apiKey,"\"";
-	.log.out "Running tweet query --- ",.Q.s1 query;
-	res:@[.Q.hg;
+	query:"curl ",query," -H \"Authorization: Bearer ",apiKey,"\"";
+	.log.out "Running tweet query --- ",query;
+	res:@[system;
                 query;
                 {.log.err "Failed to run query --- ",x," due to ",y;'"Query Error"}[query]
         ];
+	:queryFormatter res
  };
 
-//QueryRunner - Runs query and parse res
-
 //QueryFormatter - Formats into desired shape to be visualised on kx db.
+queryFormatter:{[res]
+	//takes in json res and parse
+	res:@[.j.k;raze res;{.log.err "Failed to parse res as json --- ",x;'y}[res]];
+	//to find a point in tweet so that we can split it and create a url
+	//This url can be used from the front end to navigate to the tweet
+	:res[`data]
+ };
 
 
 \d .
