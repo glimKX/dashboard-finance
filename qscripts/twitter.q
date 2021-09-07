@@ -60,9 +60,14 @@ queryFormatter:{[res]
 	res:@[.j.k;raze res;{.log.err "Failed to parse res as json --- ",x;'y}[res]];
 	//to find a point in tweet so that we can split it and create a url
 	//This url can be used from the front end to navigate to the tweet
-	:res[`data]
+	:urlExtract res[`data]
  };
 
+urlExtract:{[res]
+	res:update url:{"https://t.co",vs[" ";("https://t.co" vs x)[1]][0]} each text from res;
+	:res
+ };
+	
 
 \d .
 

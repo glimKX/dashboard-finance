@@ -2,7 +2,7 @@
   "id": "9c2143e2-bb70-fda3-ae8f-51f2a81fe720",
   "name": "FinDash - Tech",
   "creationDate": "Tue, 23 Jun 2020 12:59:35 GMT",
-  "lastUpdateDate": "Mon, 12 Jul 2021 13:23:15 GMT",
+  "lastUpdateDate": "Tue, 07 Sep 2021 12:38:15 GMT",
   "thumb": null,
   "screenDetails": [
     {
@@ -1140,7 +1140,7 @@
                           "Basics": {
                             "layout": "horizontaltop",
                             "maxSize": 0,
-                            "minSize": 250
+                            "minSize": 300
                           },
                           "Style": {
                             "advanced": "",
@@ -1178,7 +1178,7 @@
                         "components": [],
                         "widgets": [
                           {
-                            "id": "1ed502e1-d99c-1f90-db50-c33afd8a57dd",
+                            "id": "55a5c8f2-8130-0428-684e-1135b737af92",
                             "layout": {
                               "row": null,
                               "column": null,
@@ -1186,19 +1186,88 @@
                               "colSpan": 6
                             },
                             "component": {
-                              "id": "1d9149d7-a2a7-5ea2-f4e7-e581074b45e1",
-                              "key": "BasicComponents",
+                              "id": "17525162-a73b-171f-3177-e7f451e01600",
+                              "key": "Datagrid",
                               "options": {
-                                "version": "4.5.0",
-                                "ViewState": {
-                                  "Url": "https://www.google.com/custom?q=&amp;btnG=Search"
-                                },
+                                "version": "4.5.0a",
+                                "datagridPossibleColumns": [
+                                  "id",
+                                  "text",
+                                  "url"
+                                ],
+                                "datagridPossibleColumnsWithItself": [
+                                  "<this>",
+                                  "id",
+                                  "text",
+                                  "url"
+                                ],
+                                "selectedColumnPossibleValues": [
+                                  "id",
+                                  "text",
+                                  "url"
+                                ],
+                                "highlightTargetPossibleValues": [
+                                  "id",
+                                  "text",
+                                  "url",
+                                  "*"
+                                ],
+                                "sortingPossibleValues": [
+                                  "",
+                                  "id",
+                                  "text",
+                                  "url"
+                                ],
                                 "Basics": {
-                                  "ComponentName": "webComponent"
+                                  "Data": {
+                                    "_dashboardsType": "data",
+                                    "value": "pullTweetNews"
+                                  },
+                                  "Filtering": "disabled",
+                                  "IsFilterVisible": false,
+                                  "ShowPagingControl": false,
+                                  "EnableGrouping": false
+                                },
+                                "ColumnsConfiguration": [
+                                  {
+                                    "Field": "text",
+                                    "DisplayName": "Latest Tweets ",
+                                    "WidthWeight": 100,
+                                    "MinWidthAbsolute": 100
+                                  }
+                                ],
+                                "Selection": {
+                                  "RowSelectionColumn": "id",
+                                  "Actions": {
+                                    "0": {
+                                      "Current": "url",
+                                      "Target": {
+                                        "_dashboardsType": "viewstate",
+                                        "value": "url"
+                                      },
+                                      "_Type": "map",
+                                      "TriggerColumn": "text",
+                                      "Trigger": "Mouse In"
+                                    },
+                                    "1": {
+                                      "Url": {
+                                        "_dashboardsType": "viewstate",
+                                        "value": "url"
+                                      },
+                                      "Target": "_blank",
+                                      "_Type": "url",
+                                      "TriggerColumn": "text",
+                                      "Trigger": "Double Click"
+                                    }
+                                  }
+                                },
+                                "FileExport": {
+                                  "ShowExportCsvButton": false,
+                                  "ShowExportExcelButton": false
                                 },
                                 "Style": {
-                                  "advanced": "",
-                                  "cssClasses": ""
+                                  "EvenRowBackgroundColorOverride": "#ffffff",
+                                  "OddRowBackgroundColorOverride": "#f4f4f4"
                                 },
                                 "Alignment": {
                                   "paddingLeft": 0,
@@ -1210,16 +1279,9 @@
                                   "innerPaddingTop": 0,
                                   "innerPaddingBottom": 0,
                                   "titlePaddingLeft": 0,
-                                  "titlePaddingRight": 0,
-                                  "titlePaddingTop": 7,
-                                  "titlePaddingBottom": 7
+                                  "titlePaddingRight": 0
                                 },
                                 "format": {
-                                  "titleFontSize": 16,
-                                  "titleHorizontal": "Center",
-                                  "titleFontBold": false,
-                                  "titleShadow": false,
-                                  "titleTransparentBackground": false,
                                   "tileBorderWidth": 0,
                                   "tileBorderRounding": 0,
                                   "tileBorderColor": "#000000",
@@ -1231,7 +1293,7 @@
                               "containerId": null,
                               "components": [],
                               "widgets": [],
-                              "definitionId": "24",
+                              "definitionId": "21",
                               "hasOnSettingsChange": true
                             }
                           }
@@ -1580,6 +1642,111 @@
           "isViewState": true
         }
       ],
+      "_subscriptionKey": "",
+      "_isStreamingSubscription": false,
+      "_hasUpdateQuery": false,
+      "_updateQueryString": "",
+      "_updateType": "query",
+      "_pageSize": 2000,
+      "_serverPaging": false
+    },
+    "pullTweetNews": {
+      "_autoExec": true,
+      "_columns": [
+        "id",
+        "text",
+        "url"
+      ],
+      "_dataType": "analytic",
+      "_dataSource": "kdb",
+      "_connection": "tweet",
+      "_mappings": {
+        "key": "id",
+        "mappings": {},
+        "value": "text"
+      },
+      "_maxRows": 2000,
+      "_subscriptionType": "polling",
+      "_subscriptionInterval": 60,
+      "_layout": [
+        {
+          "isExpanded": true,
+          "weight": 2
+        },
+        {
+          "isExpanded": false,
+          "weight": 1
+        },
+        {
+          "isExpanded": false,
+          "weight": 1
+        },
+        {
+          "isExpanded": true,
+          "weight": 0
+        },
+        {
+          "isExpanded": true,
+          "weight": 2
+        }
+      ],
+      "_selectedAnalytic": ".tweet.tweetSearch",
+      "_analyticParams": [
+        {
+          "id": "dict",
+          "name": "dict",
+          "type": "dict",
+          "description": "",
+          "required": false,
+          "value": {
+            "hashtag": {
+              "type": "string",
+              "IsKdbParam": true,
+              "isViewState": true,
+              "name": "hashtag",
+              "value": "<%dailyHDBBySym/syms%>"
+            },
+            "filter": {
+              "type": "string",
+              "IsKdbParam": true,
+              "isViewState": false,
+              "name": "filter",
+              "value": "news"
+            }
+          },
+          "isViewState": false
+        }
+      ],
+      "_analyticParameters": [
+        {
+          "id": "dict",
+          "name": "dict",
+          "type": "dict",
+          "description": "",
+          "required": false,
+          "value": {
+            "hashtag": {
+              "type": "string",
+              "IsKdbParam": true,
+              "isViewState": true,
+              "name": "hashtag",
+              "value": "<%dailyHDBBySym/syms%>"
+            },
+            "filter": {
+              "type": "string",
+              "IsKdbParam": true,
+              "isViewState": false,
+              "name": "filter",
+              "value": "news"
+            }
+          },
+          "isViewState": false
+        }
+      ],
+      "_streamingParameters": {
+        "_dashboardsType": "viewstate",
+        "value": "pullTweetNews/_streamingParameters"
+      },
       "_subscriptionKey": "",
       "_isStreamingSubscription": false,
       "_hasUpdateQuery": false,
